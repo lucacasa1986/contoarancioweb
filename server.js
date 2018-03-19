@@ -1,7 +1,10 @@
 //Install express server
 const express = require('express');
 const app = express();
+var proxy = require('express-http-proxy');
 
+ 
+app.use('/api', proxy('https://lucacasa1986.pythonanywhere.com'));
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist'));
 
