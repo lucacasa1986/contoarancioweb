@@ -2,7 +2,7 @@
 <hr>
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let conto of listaConti">
-    <a href="/conto/{{conto.id}}">Conto {{conto.descrizione}} di {{conto.titolare}}</a>
+    <a routerLink="/conto/{{conto.id}}">Conto {{conto.descrizione}} di {{conto.titolare}}</a>
   </li>
 </ul>
 <br>
