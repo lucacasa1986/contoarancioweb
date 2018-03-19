@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ContoComponent implements OnInit {
 
-  private idConto:number;
+  idConto:number;
 
   constructor(private route: ActivatedRoute) {
     this.route.params.subscribe(res => {
