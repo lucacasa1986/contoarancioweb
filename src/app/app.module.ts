@@ -19,6 +19,10 @@ import { ListaContiComponent } from './conti/lista-conti/lista-conti.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ContoComponent } from './conti/conto/conto.component';
 import { ContoEditComponent } from './conti/conto-edit/conto-edit.component';
+import { LoginComponent } from './login/login/login.component';
+import { AuthService } from './login/auth.service';
+import { AuthGuardService } from './login/auth-guard.service';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 
 @NgModule({
@@ -31,12 +35,22 @@ import { ContoEditComponent } from './conti/conto-edit/conto-edit.component';
     UploaderComponent,
     ListaContiComponent,
     ContoComponent,
-    ContoEditComponent
+    ContoEditComponent,
+    LoginComponent
   ],
   imports: [
-    BrowserModule, FormsModule, HttpClientModule, NgbModule.forRoot(), TagInputModule, BrowserAnimationsModule, ReactiveFormsModule, AppRoutingModule
+    BrowserModule, FormsModule, HttpClientModule, NgbModule.forRoot(), TagInputModule, BrowserAnimationsModule, ReactiveFormsModule, AppRoutingModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          let token = localStorage.getItem('token');
+          return token;
+        },
+        whitelistedDomains: [ /^null$/ ]
+      },
+    })
   ],
-  providers: [MovimentoServiceService, TagService],
+  providers: [MovimentoServiceService, TagService, AuthService, AuthGuardService, JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

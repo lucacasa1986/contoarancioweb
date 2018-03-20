@@ -3,15 +3,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ListaContiComponent } from '../conti/lista-conti/lista-conti.component';
 import { ContoComponent } from '../conti/conto/conto.component';
+import { LoginComponent } from '../login/login/login.component';
+import { AuthGuardService } from '../login/auth-guard.service';
 
 const routes: Routes = [
   {
       path: '',
-      component: ListaContiComponent
+      component: ListaContiComponent,
+      canActivate: [AuthGuardService]
   },
   {
     path: 'conto/:idConto',
-    component: ContoComponent
+    component: ContoComponent,
+    canActivate: [AuthGuardService] 
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 
