@@ -22,10 +22,15 @@ import { ContoEditComponent } from './conti/conto-edit/conto-edit.component';
 import { LoginComponent } from './login/login/login.component';
 import { AuthService } from './login/auth.service';
 import { AuthGuardService } from './login/auth-guard.service';
-import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
-export function tokenGetter() {
-  return localStorage.getItem('token');
+export function jwtOptionsFactory(tokenService) {
+  return {
+    tokenGetter: () => {
+      return localStorage.getItem('token');
+    },
+    whitelistedDomains: [ /^null$/ ]
+  }
 }
 
 @NgModule({
@@ -44,10 +49,11 @@ export function tokenGetter() {
   imports: [
     BrowserModule, FormsModule, HttpClientModule, NgbModule.forRoot(), TagInputModule, BrowserAnimationsModule, ReactiveFormsModule, AppRoutingModule,
     JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: new Array(new RegExp('^null$'))
-      },
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: []
+      }
     })
   ],
   providers: [MovimentoServiceService, TagService, AuthService, AuthGuardService, JwtHelperService],
