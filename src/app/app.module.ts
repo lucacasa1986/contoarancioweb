@@ -24,6 +24,9 @@ import { AuthService } from './login/auth.service';
 import { AuthGuardService } from './login/auth-guard.service';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -42,11 +45,8 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
     BrowserModule, FormsModule, HttpClientModule, NgbModule.forRoot(), TagInputModule, BrowserAnimationsModule, ReactiveFormsModule, AppRoutingModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          let token = localStorage.getItem('token');
-          return token;
-        },
-        whitelistedDomains: [ /^null$/ ]
+        tokenGetter: tokenGetter,
+        whitelistedDomains: [ new RegExp('/^null$/') ]
       },
     })
   ],
