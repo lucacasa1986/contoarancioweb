@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Tag } from './movimenti/movimento.model';
 
 @Injectable()
 export class TagService {
 
-  allTags:string[] = [];
+  allTags:Tag[] = [];
 
   constructor(private http:HttpClient) { }
 
   init() {
     this.http.get("/api/tags").subscribe(
       data => {
+        debugger;
         this.allTags = (data as any[]).map(function(element){
-          return element.name;
+          return new Tag(element);
         });
       }
     );
@@ -23,8 +25,15 @@ export class TagService {
   }
 
   addNewTag(movimento_id: number, tag_value:string) {
-    if ( this.allTags.indexOf(tag_value) < 0 ) {
-      this.allTags.push(tag_value);
+    let tag_exists:boolean = this.allTags.some(function(tag: Tag, index: number, array: Tag[]):boolean {
+      return tag.value == tag_value;
+    })
+    if ( !tag_exists ) {
+      let new_tag:Tag = new Tag({
+        "display": tag_value,
+        "value": tag_value
+      });
+      this.allTags.push(new_tag);
     }
     return this.http.put("/api/tag/"+movimento_id+"/" + tag_value,{});
   }

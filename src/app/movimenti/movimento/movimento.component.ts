@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Movimento } from '../movimento.model';
+import { Movimento, Tag } from '../movimento.model';
 import { MovimentoServiceService } from '../movimento-service.service';
 import { TagService } from '../../tag.service';
 
@@ -14,20 +14,12 @@ export class MovimentoComponent implements OnInit {
   @Input() categorie: Object[];
   @Output() movimentoUpdate: EventEmitter<Movimento> = new EventEmitter<Movimento>();
   isVisible: Boolean = false;
-  taggedSubcategories = [];
-  subcategories: string[];
+  subcategories: Tag[];
 
   constructor(private _service:MovimentoServiceService, private tagService:TagService) { }
 
   ngOnInit() {
     this.subcategories = this.tagService.allTags;
-    this.tagService.getTagForMovimento(this.movimento["id"]).subscribe(
-      data => {
-        this.taggedSubcategories = (data as any[]).map(function(element){
-          return element.name;
-        });
-      }
-    )
   }
 
   onChangeSelectedCategory(value) {

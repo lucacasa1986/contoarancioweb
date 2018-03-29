@@ -29,7 +29,7 @@
       <p class="list-group-item-text">{{movimento.description}}</p>
     </div>
     <div class="col">
-        <tag-input [(ngModel)]='taggedSubcategories' 
+        <tag-input [(ngModel)]='movimento.tags' 
                    [placeholder]="'Inserisci un altro tag'" 
                    [secondaryPlaceholder]="'Inserisci tag'"
                    (onAdd)="addTag($event)"
