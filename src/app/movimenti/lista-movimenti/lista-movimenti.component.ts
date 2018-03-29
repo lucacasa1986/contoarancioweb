@@ -39,6 +39,8 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
   chartUscite: Chart;
   chartEntrate: Chart;
 
+  selectedTab = "OUT";
+
   constructor(private _service:MovimentoServiceService) { }
 
   ngOnInit() {
@@ -210,6 +212,10 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
         return false;
       }
     });
+  }
+
+  onSelectedTab(tabId:string){
+    this.selectedTab = tabId;
   }
 
 }

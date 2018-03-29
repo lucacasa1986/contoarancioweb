@@ -26,7 +26,7 @@
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-outline-primary" 
                 [ngClass]="{ 'active': categoria.selected }" 
-                *ngFor="let categoria of categorie" 
+                *ngFor="let categoria of categorie | categoryFilter:selectedTab" 
                 (click)="toggleCategory(categoria)"
                 placement="top" [ngbTooltip]="categoria.descrizione">
                     <span [class]="categoria.icon_class"  [ngStyle]="{ color: categoria.colore }"></span>
@@ -37,8 +37,8 @@
     </div>
 </div>
 <hr>
-<app-tabs>
-        <app-tab [tabTitle]="'Spese'">
+<app-tabs (selectedTab)="onSelectedTab($event)">
+        <app-tab [tabTitle]="'Spese'" [tabId]="'OUT'">
             <div class="row">
                 <div class="col-xs-12 pull-left">
                     Totale spese nel periodo: {{ getTotaleUscite() }}
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </app-tab>
-        <app-tab tabTitle="Entrate">
+        <app-tab tabTitle="Entrate" [tabId]="'IN'">
             <div class="row">
                 <div class="col-xs-12 pull-left">
                     Totale entrate nel periodo: {{ getTotaleEntrate()}}

@@ -8,9 +8,13 @@ export class Movimento {
     data_movimento: Date;
     categoria_id: Number;
     tags: Tag[] = [];
+    tipo:string = "OUT";
 
     constructor( json_o: Object){
         this.amount = json_o["amount"];
+        if ( this.amount > 0 ){
+            this.tipo="IN";
+        }
         this.type = json_o["type"];
         this.description = json_o["description"];
         this.data_movimento = json_o["date"];

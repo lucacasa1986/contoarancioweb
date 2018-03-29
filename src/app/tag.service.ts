@@ -12,7 +12,6 @@ export class TagService {
   init() {
     this.http.get("/api/tags").subscribe(
       data => {
-        debugger;
         this.allTags = (data as any[]).map(function(element){
           return new Tag(element);
         });

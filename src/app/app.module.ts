@@ -23,6 +23,7 @@ import { LoginComponent } from './login/login/login.component';
 import { AuthService } from './login/auth.service';
 import { AuthGuardService } from './login/auth-guard.service';
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { CategoryFilterPipe } from './category-filter.pipe';
 
 export function jwtOptionsFactory(tokenService) {
   return {
@@ -44,7 +45,8 @@ export function jwtOptionsFactory(tokenService) {
     ListaContiComponent,
     ContoComponent,
     ContoEditComponent,
-    LoginComponent
+    LoginComponent,
+    CategoryFilterPipe
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, NgbModule.forRoot(), TagInputModule, BrowserAnimationsModule, ReactiveFormsModule, AppRoutingModule,

@@ -1,4 +1,4 @@
-import { Component, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, ContentChildren, QueryList, AfterContentInit, Output, EventEmitter } from '@angular/core';
 import { TabComponent } from '../tab/tab.component';
 
 @Component({
@@ -16,6 +16,8 @@ import { TabComponent } from '../tab/tab.component';
 export class TabsComponent implements AfterContentInit {
 
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
+
+  @Output() selectedTab:EventEmitter<string> = new EventEmitter<string>();
   
   // contentChildren are set
   ngAfterContentInit() {
@@ -34,6 +36,7 @@ export class TabsComponent implements AfterContentInit {
     
     // activate the tab the user has clicked on.
     tab.active = true;
+    this.selectedTab.emit(tab.tabId);
   }
 
 }

@@ -6,7 +6,7 @@
           <span [class]="getCategoriaIcon()" [ngStyle]="{ color: getCategoriaColoreById() }" style="margin-right: 20px"  placement="top" [ngbTooltip]="getCategoriaDescription()"></span>
         </button>
         <div ngbDropdownMenu aria-labelledby="categoryDropdown">
-          <button class="dropdown-item pointer" *ngFor="let categoria of categorie" (click)="cambiaCategoria(categoria)">
+          <button class="dropdown-item pointer" *ngFor="let categoria of categorie | categoryFilter:movimento.tipo" (click)="cambiaCategoria(categoria)">
               <span [class]="categoria.icon_class" [ngStyle]="{ color: categoria.colore }"></span> {{categoria.descrizione}}
           </button>
         </div>
