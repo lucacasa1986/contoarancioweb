@@ -49,9 +49,18 @@
                     <canvas id="canvas_uscite"> {{ chartUscite }}</canvas>
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <ngb-pagination [collectionSize]="uscite.length" [(page)]="uscitePage" [boundaryLinks]="true"></ngb-pagination>
+                </div>
+            </div>
+            
             <div class="row" style="margin-top:25px">
                 <div class="col">
-                    <app-movimento *ngFor="let movimento of uscite" [movimento]="movimento" [categorie]="categorie" (movimentoUpdate)="onMovimentoUpdated($event)"></app-movimento>
+                    <app-movimento *ngFor="let movimento of uscite | slice: (uscitePage * 10) - 10 :uscitePage * 10" 
+                    [movimento]="movimento" 
+                    [categorie]="categorie" 
+                    (movimentoUpdate)="onMovimentoUpdated($event)"></app-movimento>
                 </div>
             </div>
         </app-tab>
@@ -66,10 +75,19 @@
                     <canvas id="canvas_entrate"> {{ chartEntrate }}</canvas>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col">
+                    <ngb-pagination [collectionSize]="entrate.length" [(page)]="entratePage" [boundaryLinks]="true"></ngb-pagination>
+                </div>
+            </div>
             
             <div class="row" style="margin-top: 25px">
                 <div class="col">
-                    <app-movimento *ngFor="let movimento of entrate" [movimento]="movimento" [categorie]="categorie"></app-movimento>
+                    <app-movimento *ngFor="let movimento of entrate | slice: (entratePage * 10) - 10 :entratePage * 10" 
+                        [movimento]="movimento" 
+                        [categorie]="categorie">
+                    </app-movimento>
                 </div>
             </div>
         </app-tab>

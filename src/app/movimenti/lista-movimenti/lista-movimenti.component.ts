@@ -41,6 +41,10 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
 
   selectedTab = "OUT";
 
+  /* pagination*/
+  uscitePage:number = 1;
+  entratePage:number = 1;
+
   constructor(private _service:MovimentoServiceService) { }
 
   ngOnInit() {
