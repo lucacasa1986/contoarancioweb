@@ -110,6 +110,22 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
         ]
       },
       options: {
+        scales: {
+          xAxes: [{
+            type: 'time',
+            distribution: 'series',
+            ticks: {
+              source: 'auto'
+            },
+            time: {
+              parser: 'DD-MM-YYYY',
+              unit: 'week',
+              displayFormats: {
+                'day': 'DD MMM',
+              }
+            }
+          }],
+        },
         title: {
           display: true,
           text: 'Andamento nel periodo selezionato'
