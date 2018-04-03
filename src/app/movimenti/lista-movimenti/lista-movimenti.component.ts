@@ -38,6 +38,7 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
   public categorie;
   chartUscite: Chart;
   chartEntrate: Chart;
+  chartAndamento: Chart;
 
   selectedTab = "OUT";
 
@@ -94,6 +95,27 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
         }
       }
     });
+
+    this.chartAndamento = new Chart('canvas_andamento', {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "Andamento",
+            borderColor: "#3e95cd",
+            fill: false,
+            data: []
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Andamento nel periodo selezionato'
+        }
+      }
+    });
   }
 
   firstLoad() {
@@ -101,6 +123,7 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
       data => {
         this.categorie = data
         this.getMovimenti();
+        this.getAndamento();
       }
     )
   }
@@ -119,6 +142,11 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
       this.dateFrom = new Date();
       this.dateFrom.setMonth ( this.dateTo.getMonth() -6);
     }
+  }
+
+  doSearch(){
+    this.getMovimenti();
+    this.getAndamento();
   }
 
   getMovimenti() {
@@ -141,6 +169,18 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
         }
         this.buildChart(this.chartUscite, this.uscite);
         this.buildChart(this.chartEntrate, this.entrate);
+      },
+      err => console.error(err),
+      () => {}
+
+    );
+  }
+
+  getAndamento() {
+    this._service.getAndamento(this.dateFrom, this.dateTo, this.idConto).subscribe(
+      data => { 
+        let lista_movimenti = data as Object;
+        this.updateGraficoAndamento(lista_movimenti)
       },
       err => console.error(err),
       () => {}
@@ -188,6 +228,14 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
       }
     }
     chart.update();
+  }
+
+  updateGraficoAndamento(rilevazioni:Object) {
+    this.chartAndamento.data.labels = rilevazioni["date"];
+    
+    this.chartAndamento.data.datasets[0].data = rilevazioni["valori"];
+
+    this.chartAndamento.update();
   }
 
   getCategorie() {

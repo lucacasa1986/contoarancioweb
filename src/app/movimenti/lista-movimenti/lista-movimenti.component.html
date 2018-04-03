@@ -57,7 +57,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group col">
-                    <button class="btn btn-primary mb-2" (click)="getMovimenti()">Cerca</button>
+                    <button class="btn btn-primary mb-2" (click)="doSearch()">Cerca</button>
                 </div>
             </div>
             
@@ -76,6 +76,12 @@
             <div class="row">
                 <div class="col">
                     <canvas id="canvas_uscite"> {{ chartUscite }}</canvas>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <canvas id="canvas_andamento"> {{ chartAndamento }}</canvas>
                 </div>
             </div>
             <div class="row">

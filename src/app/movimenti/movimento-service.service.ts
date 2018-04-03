@@ -36,6 +36,16 @@ export class MovimentoServiceService {
     });
   }
 
+  getAndamento(dateFrom: Date, dateTo:Date, contoId: number) {
+    let params = {
+      from_date: this.formatDate(dateFrom),
+      to_date:  this.formatDate(dateTo)
+    }
+    return this.http.get("/api/"+contoId + "/andamento", {
+      params: params
+    });
+  }
+
   getAllCategories() {
     return this.http.get("/api/categories");
   }
