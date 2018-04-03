@@ -5,6 +5,7 @@ import { ListaContiComponent } from '../conti/lista-conti/lista-conti.component'
 import { ContoComponent } from '../conti/conto/conto.component';
 import { LoginComponent } from '../login/login/login.component';
 import { AuthGuardService } from '../login/auth-guard.service';
+import { SignupComponent } from '../login/signup/signup.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
   }
 ];
 

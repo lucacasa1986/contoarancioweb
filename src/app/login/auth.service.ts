@@ -16,11 +16,22 @@ export class AuthService {
       const formData: FormData = new FormData();
       formData.append('email', email);
       formData.append('password', password);
-      return this.http.post('/api/login', formData)
+      return this.http.post(endpoint, formData)
           // this is just the HTTP call, 
           // we still need to handle the reception of the token
           .shareReplay();
   }
+
+  signup(email:string, password:string ) {
+    const endpoint = '/api/register';
+    const formData: FormData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    return this.http.post(endpoint, formData, {responseType: 'text'})
+        // this is just the HTTP call, 
+        // we still need to handle the reception of the token
+        .shareReplay();
+}
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
