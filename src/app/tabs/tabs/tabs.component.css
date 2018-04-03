@@ -1,3 +1,7 @@
 .pane{
     padding: 1em;
   }
+
+li {
+  cursor: pointer;
+}

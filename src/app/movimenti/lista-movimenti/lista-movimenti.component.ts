@@ -45,6 +45,8 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
   uscitePage:number = 1;
   entratePage:number = 1;
 
+  selectedSearch:string = "3months";
+
   constructor(private _service:MovimentoServiceService) { }
 
   ngOnInit() {
@@ -103,7 +105,24 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
     )
   }
 
+  changePeriod(period:string) {
+     if ( period == 'month') {
+      this.dateTo = new Date();
+      this.dateFrom = new Date();
+      this.dateFrom.setMonth ( this.dateTo.getMonth() -1);
+    } else if ( this.selectedSearch == '3months') {
+      this.dateTo = new Date();
+      this.dateFrom = new Date();
+      this.dateFrom.setMonth ( this.dateTo.getMonth() -3);
+    } else if ( this.selectedSearch == '6months') {
+      this.dateTo = new Date();
+      this.dateFrom = new Date();
+      this.dateFrom.setMonth ( this.dateTo.getMonth() -6);
+    }
+  }
+
   getMovimenti() {
+
     this._service.getMovements(this.dateFrom, this.dateTo, this.idConto, this.getSelectedCategories()).subscribe(
       data => { 
         let lista_movimenti = data as Object[];
