@@ -75,13 +75,26 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <canvas id="canvas_uscite"> {{ chartUscite }}</canvas>
+                    <div id="carouselGraphs" class="carousel slide" data-ride="carousel" data-interval="false">
+                            <ol class="carousel-indicators">
+                                    <li data-target="#carouselGraphs" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carouselGraphs" data-slide-to="1"></li>
+                                </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                            <canvas id="canvas_uscite"> {{ chartUscite }}</canvas>
+                            </div>
+                            <div class="carousel-item">
+                            <canvas id="canvas_andamento"> {{ chartAndamento }}</canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
-
             <div class="row">
                 <div class="col">
-                    <canvas id="canvas_andamento"> {{ chartAndamento }}</canvas>
+                        
                 </div>
             </div>
             <div class="row">
