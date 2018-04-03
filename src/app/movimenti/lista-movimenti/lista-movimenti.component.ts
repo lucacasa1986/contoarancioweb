@@ -45,12 +45,12 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
   uscitePage:number = 1;
   entratePage:number = 1;
 
-  selectedSearch:string = "3months";
+  selectedSearch:string = "month";
 
   constructor(private _service:MovimentoServiceService) { }
 
   ngOnInit() {
-    this.dateFrom.setMonth ( this.dateTo.getMonth() -3);
+    this.changePeriod(this.selectedSearch);
     this.firstLoad();
   }
 
