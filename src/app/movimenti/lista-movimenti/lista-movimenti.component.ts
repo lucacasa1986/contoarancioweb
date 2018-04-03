@@ -3,6 +3,7 @@ import { Movimento } from '../movimento.model';
 import { MovimentoServiceService } from '../movimento-service.service';
 import { Chart } from 'chart.js';
 import { NgbDateStruct, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 
 @Injectable()
 export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
@@ -247,6 +248,18 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
   }
 
   updateGraficoAndamento(rilevazioni:Object) {
+    let date_from = moment(this.dateFrom);
+    let date_to = moment(this.dateTo);
+    let diff_days = date_to.diff(date_from, 'days');
+    if ( diff_days <= 15 ) {
+      this.chartAndamento.options.scales.xAxes[0].time.unit = 'day';
+    }
+    else if ( diff_days > 15 && diff_days < 60 ){
+      this.chartAndamento.options.scales.xAxes[0].time.unit = 'week';
+    }else {
+      this.chartAndamento.options.scales.xAxes[0].time.unit = 'month';
+    }
+
     this.chartAndamento.data.labels = rilevazioni["date"];
     
     this.chartAndamento.data.datasets[0].data = rilevazioni["valori"];
