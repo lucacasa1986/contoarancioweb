@@ -39,6 +39,9 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
           }
         }
       });
+      if( this.movimenti) {
+        this.updateChart();
+      }
   }
 
   updateChart() {

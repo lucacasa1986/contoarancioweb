@@ -2,7 +2,7 @@ import { Component, OnInit, AfterContentInit, AfterViewInit, Injectable, Input }
 import { Movimento } from '../movimento.model';
 import { MovimentoServiceService } from '../movimento-service.service';
 import { Chart } from 'chart.js';
-import { NgbDateStruct, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDateAdapter, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 @Injectable()
@@ -170,8 +170,8 @@ export class ListaMovimentiComponent implements OnInit {
     });
   }
 
-  onSelectedTab(tabId:string){
-    this.selectedTab = tabId;
+  onSelectedTab(event:NgbTabChangeEvent){
+    this.selectedTab = event.nextId;
   }
 
 }

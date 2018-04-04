@@ -11,8 +11,6 @@ import { MovimentoServiceService } from './movimenti/movimento-service.service';
 import { AppComponent } from './app.component';
 import { ListaMovimentiComponent } from './movimenti/lista-movimenti/lista-movimenti.component';
 import { MovimentoComponent } from './movimenti/movimento/movimento.component';
-import { TabComponent } from './tabs/tab/tab.component';
-import { TabsComponent } from './tabs/tabs/tabs.component';
 import { UploaderComponent } from './movimenti/uploader/uploader.component';
 import { TagService } from './tag.service';
 import { ListaContiComponent } from './conti/lista-conti/lista-conti.component';
@@ -42,8 +40,6 @@ export function jwtOptionsFactory(tokenService) {
     AppComponent,
     ListaMovimentiComponent,
     MovimentoComponent,
-    TabComponent,
-    TabsComponent,
     UploaderComponent,
     ListaContiComponent,
     ContoComponent,

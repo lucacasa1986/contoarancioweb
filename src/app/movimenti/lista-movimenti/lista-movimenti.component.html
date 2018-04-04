@@ -66,80 +66,84 @@
     </div>
 </div>
 <hr>
-<app-tabs (selectedTab)="onSelectedTab($event)">
-        <app-tab [tabTitle]="'Spese'" [tabId]="'OUT'">
-            <div class="row">
-                <div class="col-xs-12 pull-left">
-                    Totale spese nel periodo: {{ getTotaleUscite() }}
-                </div>
+<ngb-tabset type="pills">
+    <ngb-tab title="Spese" id="OUT">
+      <ng-template ngbTabContent>
+        <div class="row">
+            <div class="col-xs-12 pull-left">
+                Totale spese nel periodo: {{ getTotaleUscite() }}
             </div>
-            
-            <div class="row">
-                <div class="col">
-                    <div id="carouselGraphs" class="carousel slide" data-ride="carousel" data-interval="false">
-                            <ol class="carousel-indicators">
-                                    <li data-target="#carouselGraphs" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carouselGraphs" data-slide-to="1"></li>
-                                </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie">
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div id="carouselGraphs" class="carousel slide" data-ride="carousel" data-interval="false">
+                        <ol class="carousel-indicators">
+                                <li data-target="#carouselGraphs" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselGraphs" data-slide-to="1"></li>
+                            </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie">
 
-                                </app-grafico>
-                            </div>
-                            <div class="carousel-item">
-                                    <app-grafico-andamento [rilevazioni]="andamenti" [title]="'Andamento nel periodo selezionato'">
+                            </app-grafico>
+                        </div>
+                        <div class="carousel-item">
+                                <app-grafico-andamento [rilevazioni]="andamenti" [title]="'Andamento nel periodo selezionato'">
 
-                                    </app-grafico-andamento>
-                            </div>
+                                </app-grafico-andamento>
                         </div>
                     </div>
-                    
                 </div>
+                
             </div>
-            <div class="row">
-                <div class="col">
-                    <ngb-pagination [collectionSize]="uscite.length" [(page)]="uscitePage" [boundaryLinks]="true"></ngb-pagination>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <ngb-pagination [collectionSize]="uscite.length" [(page)]="uscitePage" [boundaryLinks]="true"></ngb-pagination>
             </div>
-            
-            <div class="row" style="margin-top:25px">
-                <div class="col">
-                    <app-movimento *ngFor="let movimento of uscite | slice: (uscitePage * 10) - 10 :uscitePage * 10" 
+        </div>
+        
+        <div class="row" style="margin-top:25px">
+            <div class="col">
+                <app-movimento *ngFor="let movimento of uscite | slice: (uscitePage * 10) - 10 :uscitePage * 10" 
+                [movimento]="movimento" 
+                [categorie]="categorie" 
+                (movimentoUpdate)="onMovimentoUpdated($event)"></app-movimento>
+            </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Entrate" id="IN">
+      <ng-template ngbTabContent>
+        <div class="row">
+            <div class="col-xs-12 pull-left">
+                Totale entrate nel periodo: {{ getTotaleEntrate()}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <app-grafico [movimenti]="entrate" [title]="'Entrate'" [categorie]="categorie">
+
+                </app-grafico>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <ngb-pagination [collectionSize]="entrate.length" [(page)]="entratePage" [boundaryLinks]="true"></ngb-pagination>
+            </div>
+        </div>
+        
+        <div class="row" style="margin-top: 25px">
+            <div class="col">
+                <app-movimento *ngFor="let movimento of entrate | slice: (entratePage * 10) - 10 :entratePage * 10" 
                     [movimento]="movimento" 
-                    [categorie]="categorie" 
-                    (movimentoUpdate)="onMovimentoUpdated($event)"></app-movimento>
-                </div>
+                    [categorie]="categorie">
+                </app-movimento>
             </div>
-        </app-tab>
-        <app-tab tabTitle="Entrate" [tabId]="'IN'">
-            <div class="row">
-                <div class="col-xs-12 pull-left">
-                    Totale entrate nel periodo: {{ getTotaleEntrate()}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <app-grafico [movimenti]="entrate" [title]="'Entrate'" [categorie]="categorie">
-
-                    </app-grafico>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <ngb-pagination [collectionSize]="entrate.length" [(page)]="entratePage" [boundaryLinks]="true"></ngb-pagination>
-                </div>
-            </div>
-            
-            <div class="row" style="margin-top: 25px">
-                <div class="col">
-                    <app-movimento *ngFor="let movimento of entrate | slice: (entratePage * 10) - 10 :entratePage * 10" 
-                        [movimento]="movimento" 
-                        [categorie]="categorie">
-                    </app-movimento>
-                </div>
-            </div>
-        </app-tab>
-</app-tabs>
+        </div>
+      </ng-template>
+    </ngb-tab>
+</ngb-tabset>
 <hr>
