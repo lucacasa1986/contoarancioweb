@@ -24,7 +24,7 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<Date> {
   styleUrls: ['./lista-movimenti.component.css'],
   providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
-export class ListaMovimentiComponent implements OnInit, AfterContentInit {
+export class ListaMovimentiComponent implements OnInit {
 
   @Input() idConto: number;
 
@@ -37,9 +37,7 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
   public uscite:Movimento[] = [];
   public entrate:Movimento[] = [];
   public categorie;
-  chartUscite: Chart;
-  chartEntrate: Chart;
-  chartAndamento: Chart;
+  andamenti:{};
 
   selectedTab = "OUT";
 
@@ -54,85 +52,6 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
   ngOnInit() {
     this.changePeriod(this.selectedSearch);
     this.firstLoad();
-  }
-
-  ngAfterContentInit() {
-    this.chartUscite = new Chart('canvas_uscite', {
-      type: 'doughnut',
-      data: {
-        labels: [],
-        datasets: [
-          {
-            label: "Totale per categoria",
-            backgroundColor: [],
-            data: []
-          }
-        ]
-      },
-      options: {
-        title: {
-          display: true,
-          text: 'Spese'
-        }
-      }
-    });
-
-    this.chartEntrate = new Chart('canvas_entrate', {
-      type: 'doughnut',
-      data: {
-        labels: [],
-        datasets: [
-          {
-            label: "Totale per categoria",
-            backgroundColor: [],
-            data: []
-          }
-        ]
-      },
-      options: {
-        title: {
-          display: true,
-          text: 'Spese'
-        }
-      }
-    });
-
-    this.chartAndamento = new Chart('canvas_andamento', {
-      type: 'line',
-      data: {
-        labels: [],
-        datasets: [
-          {
-            label: "Andamento",
-            borderColor: "#3e95cd",
-            fill: false,
-            data: []
-          }
-        ]
-      },
-      options: {
-        scales: {
-          xAxes: [{
-            type: 'time',
-            distribution: 'series',
-            ticks: {
-              source: 'auto'
-            },
-            time: {
-              parser: 'DD-MM-YYYY',
-              unit: 'week',
-              displayFormats: {
-                'day': 'DD MMM',
-              }
-            }
-          }],
-        },
-        title: {
-          display: true,
-          text: 'Andamento nel periodo selezionato'
-        }
-      }
-    });
   }
 
   firstLoad() {
@@ -184,8 +103,8 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
             this.uscite.push(movimento);
           }
         }
-        this.buildChart(this.chartUscite, this.uscite);
-        this.buildChart(this.chartEntrate, this.entrate);
+        this.uscite = this.uscite.slice(0);
+        this.entrate = this.entrate.slice(0);
       },
       err => console.error(err),
       () => {}
@@ -196,75 +115,12 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
   getAndamento() {
     this._service.getAndamento(this.dateFrom, this.dateTo, this.idConto).subscribe(
       data => { 
-        let lista_movimenti = data as Object;
-        this.updateGraficoAndamento(lista_movimenti)
+        this.andamenti = data as Object;
       },
       err => console.error(err),
       () => {}
 
     );
-  }
-
-  buildChart(chart:Chart, movimenti:Movimento[]) {
-    chart.data.labels = [];
-    chart.data.datasets[0].backgroundColor = [];
-    chart.data.datasets[0].data = [];
-    for ( let m of movimenti) {
-      let categoria = m.categoria_id;
-      
-      if (!categoria ){
-          let index = chart.data.labels.indexOf('Spese non categorizzate');
-          if ( index > -1 )
-          {
-            let current_amount = chart.data.datasets[0].data[index];
-            let new_amount = current_amount + m.getAbsAmount();
-            chart.data.datasets[0].data[index] = new_amount;
-          }else {
-            let new_size = chart.data.labels.push('Spese non categorizzate');
-            let index = new_size - 1;
-            chart.data.datasets[0].backgroundColor.push('grey');
-            chart.data.datasets[0].data.push(m.getAbsAmount());
-          }
-      }
-      for ( let c of this.categorie) {
-        if( c['id'] == categoria) {
-          //taac
-          let index = chart.data.labels.indexOf(c['descrizione']);
-          if ( index > -1 )
-          {
-            let current_amount = chart.data.datasets[0].data[index];
-            let new_amount = current_amount + m.getAbsAmount();
-            chart.data.datasets[0].data[index] = new_amount;
-          }else {
-            let new_size = chart.data.labels.push(c['descrizione']);
-            let index = new_size - 1;
-            chart.data.datasets[0].backgroundColor.push(c['colore']);
-            chart.data.datasets[0].data.push(m.getAbsAmount());
-          }
-        }
-      }
-    }
-    chart.update();
-  }
-
-  updateGraficoAndamento(rilevazioni:Object) {
-    let date_from = moment(this.dateFrom);
-    let date_to = moment(this.dateTo);
-    let diff_days = date_to.diff(date_from, 'days');
-    if ( diff_days <= 15 ) {
-      this.chartAndamento.options.scales.xAxes[0].time.unit = 'day';
-    }
-    else if ( diff_days > 15 && diff_days < 60 ){
-      this.chartAndamento.options.scales.xAxes[0].time.unit = 'week';
-    }else {
-      this.chartAndamento.options.scales.xAxes[0].time.unit = 'month';
-    }
-
-    this.chartAndamento.data.labels = rilevazioni["date"];
-    
-    this.chartAndamento.data.datasets[0].data = rilevazioni["valori"];
-
-    this.chartAndamento.update();
   }
 
   getCategorie() {
@@ -295,8 +151,8 @@ export class ListaMovimentiComponent implements OnInit, AfterContentInit {
 
   onMovimentoUpdated (movimento:Movimento) {
     if( movimento.amount <= 0)
-      this.buildChart(this.chartUscite, this.uscite);
-    else this.buildChart(this.chartEntrate, this.entrate);
+      this.uscite = this.uscite.slice(0);
+    else this.entrate = this.entrate.slice(0);
   }
 
   toggleCategory(categoria:{}) {

@@ -73,6 +73,7 @@
                     Totale spese nel periodo: {{ getTotaleUscite() }}
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col">
                     <div id="carouselGraphs" class="carousel slide" data-ride="carousel" data-interval="false">
@@ -82,19 +83,18 @@
                                 </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                            <canvas id="canvas_uscite"> {{ chartUscite }}</canvas>
+                                <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie">
+
+                                </app-grafico>
                             </div>
                             <div class="carousel-item">
-                            <canvas id="canvas_andamento"> {{ chartAndamento }}</canvas>
+                                    <app-grafico-andamento [rilevazioni]="andamenti" [title]="'Andamento nel periodo selezionato'">
+
+                                    </app-grafico-andamento>
                             </div>
                         </div>
                     </div>
                     
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                        
                 </div>
             </div>
             <div class="row">
@@ -120,7 +120,9 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <canvas id="canvas_entrate"> {{ chartEntrate }}</canvas>
+                    <app-grafico [movimenti]="entrate" [title]="'Entrate'" [categorie]="categorie">
+
+                    </app-grafico>
                 </div>
             </div>
 

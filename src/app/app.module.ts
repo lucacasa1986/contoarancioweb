@@ -25,6 +25,8 @@ import { AuthGuardService } from './login/auth-guard.service';
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { CategoryFilterPipe } from './category-filter.pipe';
 import { SignupComponent } from './login/signup/signup.component';
+import { GraficoComponent } from './movimenti/grafico/grafico.component';
+import { GraficoAndamentoComponent } from './movimenti/grafico-andamento/grafico-andamento.component';
 
 export function jwtOptionsFactory(tokenService) {
   return {
@@ -48,7 +50,9 @@ export function jwtOptionsFactory(tokenService) {
     ContoEditComponent,
     LoginComponent,
     CategoryFilterPipe,
-    SignupComponent
+    SignupComponent,
+    GraficoComponent,
+    GraficoAndamentoComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, NgbModule.forRoot(), TagInputModule, BrowserAnimationsModule, ReactiveFormsModule, AppRoutingModule,
