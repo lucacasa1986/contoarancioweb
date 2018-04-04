@@ -170,7 +170,7 @@ export class ListaMovimentiComponent implements OnInit {
     });
   }
 
-  onSelectedTab(event:NgbTabChangeEvent){
+  onTabChange(event:NgbTabChangeEvent){
     this.selectedTab = event.nextId;
   }
 
