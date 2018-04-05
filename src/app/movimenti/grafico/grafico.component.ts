@@ -83,10 +83,7 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
         }
       }
     }
-    this.chart.resize();
     this.chart.update();
-    
-    
   }
 
   ngOnChanges(changes: SimpleChanges) {

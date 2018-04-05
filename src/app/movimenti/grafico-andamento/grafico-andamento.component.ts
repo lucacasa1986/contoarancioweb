@@ -56,6 +56,9 @@ export class GraficoAndamentoComponent implements OnChanges, AfterViewInit {
           }
         }
       });
+      if( this.rilevazioni) {
+        this.updateGraficoAndamento();
+      }
   }
 
   updateGraficoAndamento() {
