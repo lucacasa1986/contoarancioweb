@@ -46,6 +46,22 @@ export class MovimentoServiceService {
     });
   }
 
+  getTotaliPerCategoria(dateFrom: Date, dateTo:Date, contoId: number, selectedCategories:Array<{}>) {
+    let params = {
+      from_date: this.formatDate(dateFrom),
+      to_date:  this.formatDate(dateTo)
+    }
+    if ( selectedCategories )
+    {
+      params["category"] = selectedCategories.map(function(category:{}){
+        return category["id"];
+      });
+    }
+    return this.http.get("/api/"+contoId + "/parziali", {
+      params: params
+    });
+  }
+
   getAllCategories() {
     return this.http.get("/api/categories");
   }

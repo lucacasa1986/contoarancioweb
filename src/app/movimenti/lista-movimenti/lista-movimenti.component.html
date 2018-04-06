@@ -81,6 +81,7 @@
                         <ol class="carousel-indicators">
                                 <li data-target="#carouselGraphs" data-slide-to="0" class="active"></li>
                                 <li data-target="#carouselGraphs" data-slide-to="1"></li>
+                                <li data-target="#carouselGraphs" data-slide-to="2"></li>
                             </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -92,6 +93,15 @@
                                 <app-grafico-andamento [rilevazioni]="andamenti" [title]="'Andamento nel periodo selezionato'">
 
                                 </app-grafico-andamento>
+                        </div>
+                        <div class="carousel-item">
+                            <app-grafico-categorie [title]="'Andamento nel periodo selezionato'" 
+                            [categorie]="categorie" 
+                            [dateFrom]="dateFrom"
+                            [dateTo]="dateTo"
+                            [contoId]="idConto">
+
+                            </app-grafico-categorie>
                         </div>
                     </div>
                 </div>

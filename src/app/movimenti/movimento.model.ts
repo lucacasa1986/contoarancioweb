@@ -39,3 +39,29 @@ export class Tag {
         this.value = json_o["value"]; 
     }
 }
+
+export class ImportiCategoriaRilevazione {
+    importo:number;
+    month:number;
+    year:number;
+
+    constructor(importo:number, month:number, year:number) {
+        this.importo = importo;
+        this.month = month;
+        this.year  = year;
+    }
+}
+
+export class ImportiCategoria {
+    id:string;
+    descrizione:string;
+    colore:string;
+    rilevazioni:ImportiCategoriaRilevazione[];
+
+    constructor(id:string, descrizione:string, colore:string, rilevazioni:ImportiCategoriaRilevazione[]) {
+        this.id = id;
+        this.descrizione = descrizione;
+        this.colore = colore;
+        this.rilevazioni = rilevazioni;
+    }
+}
