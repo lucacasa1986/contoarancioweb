@@ -27,6 +27,11 @@ import { GraficoComponent } from './movimenti/grafico/grafico.component';
 import { GraficoAndamentoComponent } from './movimenti/grafico-andamento/grafico-andamento.component';
 import { GraficoCategorieComponent } from './movimenti/grafico-categorie/grafico-categorie.component';
 
+import { registerLocaleData } from '@angular/common';
+import localeIt from '@angular/common/locales/it';
+
+registerLocaleData(localeIt, 'it');
+
 export function jwtOptionsFactory(tokenService) {
   return {
     tokenGetter: () => {
