@@ -12,14 +12,14 @@
         </div>
       </div>
     </div>
-    <div class="col-7 pointer" (click)="isVisible = !isVisible"  >
-      <h4 style="margin: 0px">{{movimento.type}}</h4>
+    <div class="col-8 pointer" (click)="isVisible = !isVisible"  >
+      <span class="align-middle" style="font-weight:bold"> {{movimento.type}}</span>
     </div>
     <div class="col-1 pointer" (click)="isVisible = !isVisible">
-      <h5>{{ movimento.data_movimento | date:'shortDate':'':'it'}}</h5>
+      <span class="align-middle">{{ movimento.data_movimento | date:'shortDate':'':'it'}}</span>
     </div>
-    <div class="col-2 pointer" (click)="isVisible = !isVisible">
-      <h5 class="text-right importo">{{ movimento.getAbsAmount()}} €</h5>
+    <div class="col-1 pointer" (click)="isVisible = !isVisible">
+      <span class="align-middle importo">{{ movimento.getAbsAmount()}} €</span>
     </div>
   </div>
 </a>

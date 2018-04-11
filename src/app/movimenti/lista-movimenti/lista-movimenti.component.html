@@ -43,25 +43,10 @@
                     
             </div>
             <div class="form-row">
-                <div class="form-group col-md-8">
-                    <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-outline-primary" 
-                        [ngClass]="{ 'active': categoria.selected }" 
-                        *ngFor="let categoria of categorie | categoryFilter:selectedTab" 
-                        (click)="toggleCategory(categoria)"
-                        placement="top" [ngbTooltip]="categoria.descrizione">
-                            <span [class]="categoria.icon_class"  [ngStyle]="{ color: categoria.colore }"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
                 <div class="form-group col">
                     <button class="btn btn-primary mb-2" (click)="doSearch()">Cerca</button>
                 </div>
             </div>
-            
-            
         </form>
     </div>
 </div>
@@ -74,6 +59,19 @@
                 Totale spese nel periodo: {{ getTotaleUscite() }} €
             </div>
         </div>
+        <div class="row">
+            <div class="form-group col-md-8">
+                <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-outline-primary" 
+                    [ngClass]="{ 'active': categoria.selected }" 
+                    *ngFor="let categoria of categorie | categoryFilter:'OUT'" 
+                    (click)="toggleCategory(categoria)"
+                    placement="top" [ngbTooltip]="categoria.descrizione">
+                        <span [class]="categoria.icon_class"  [ngStyle]="{ color: categoria.colore }"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
         
         <div class="row">
             <div class="col">
@@ -81,18 +79,12 @@
                         <ol class="carousel-indicators">
                                 <li data-target="#carouselGraphs" data-slide-to="0" class="active"></li>
                                 <li data-target="#carouselGraphs" data-slide-to="1"></li>
-                                <li data-target="#carouselGraphs" data-slide-to="2"></li>
                             </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie">
 
                             </app-grafico>
-                        </div>
-                        <div class="carousel-item">
-                                <app-grafico-andamento [rilevazioni]="andamenti" [title]="'Andamento nel periodo selezionato'">
-
-                                </app-grafico-andamento>
                         </div>
                         <div class="carousel-item">
                             <app-grafico-categorie [title]="'Andamento nel periodo selezionato'" 
@@ -132,6 +124,19 @@
             </div>
         </div>
         <div class="row">
+            <div class="form-group col-md-8">
+                <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-outline-primary" 
+                    [ngClass]="{ 'active': categoria.selected }" 
+                    *ngFor="let categoria of categorie | categoryFilter:'IN'" 
+                    (click)="toggleCategory(categoria)"
+                    placement="top" [ngbTooltip]="categoria.descrizione">
+                        <span [class]="categoria.icon_class"  [ngStyle]="{ color: categoria.colore }"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 <app-grafico [movimenti]="entrate" [title]="'Entrate'" [categorie]="categorie">
 
@@ -155,5 +160,16 @@
         </div>
       </ng-template>
     </ngb-tab>
+    <ngb-tab title="Andamento" id="BALANCE">
+        <ng-template ngbTabContent>
+          <div class="row">
+              <div class="col">
+                <app-grafico-andamento [rilevazioni]="andamenti" [title]="'Andamento nel periodo selezionato'">
+
+                </app-grafico-andamento>
+              </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
 </ngb-tabset>
 <hr>

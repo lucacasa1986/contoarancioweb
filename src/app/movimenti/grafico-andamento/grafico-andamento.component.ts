@@ -51,7 +51,7 @@ export class GraficoAndamentoComponent implements OnChanges, AfterViewInit {
             }],
           },
           title: {
-            display: true,
+            display: false,
             text: this.title
           }
         }

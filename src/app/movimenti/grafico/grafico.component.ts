@@ -33,7 +33,7 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
         },
         options: {
           title: {
-            display: true,
+            display: false,
             responsive: true,
             text: this.title
           }

@@ -87,7 +87,7 @@ export class ListaMovimentiComponent implements OnInit {
 
   getMovimenti() {
 
-    this._service.getMovements(this.dateFrom, this.dateTo, this.idConto, this.getSelectedCategories()).subscribe(
+    this._service.getMovements(this.dateFrom, this.dateTo, this.idConto).subscribe(
       data => { 
         let lista_movimenti = data as Object[];
         this.movimenti.length = 0;
@@ -155,8 +155,56 @@ export class ListaMovimentiComponent implements OnInit {
     else this.entrate = this.entrate.slice(0);
   }
 
+  isAnyCategorySelected(type:string):boolean {
+    return this.categorie.some(category => {
+      return category["selected"] && category["tipo"] === type;
+    })
+   }
+
+  getCategoryById(category_id:Number){
+    let categoria = null;
+    this.categorie.forEach(element => {
+      if( element["id"] === category_id){
+        categoria = element;
+      }
+    });
+    return categoria;
+  }
+
   toggleCategory(categoria:{}) {
     categoria["selected"] = !categoria["selected"];
+    this.uscite.length = 0;
+    this.entrate.length = 0;
+    if ( this.isAnyCategorySelected('OUT')) {
+      this.uscite = this.movimenti.filter( 
+        movimento => {
+          categoria = this.getCategoryById(movimento.categoria_id);
+          return categoria && categoria["selected"] && movimento.amount <= 0;
+        }
+      )
+    }else {
+      this.uscite = this.movimenti.filter( 
+        movimento => {
+          return movimento.amount <= 0;
+        }
+      )
+    }
+    
+    if ( this.isAnyCategorySelected('IN')) {
+      this.entrate = this.movimenti.filter( 
+        movimento => {
+          categoria = this.getCategoryById(movimento.categoria_id);
+          return categoria && categoria["selected"] && movimento.amount > 0;
+        }
+      )
+    } else {
+      this.entrate = this.movimenti.filter( 
+        movimento => {
+          return movimento.amount > 0;
+        }
+      )
+    }
+
   }
 
   getSelectedCategories():Array<{}> {

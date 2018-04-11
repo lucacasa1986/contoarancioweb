@@ -20,16 +20,10 @@ export class MovimentoServiceService {
     return this.http.post('/api/conto', body);
   }
 
-  getMovements(dateFrom: Date, dateTo:Date, contoId: number, selectedCategories:Array<{}>) {
+  getMovements(dateFrom: Date, dateTo:Date, contoId: number) {
     let params = {
       from_date: this.formatDate(dateFrom),
       to_date:  this.formatDate(dateTo)
-    }
-    if ( selectedCategories )
-    {
-      params["category"] = selectedCategories.map(function(category:{}){
-        return category["id"];
-      });
     }
     return this.http.get("/api/"+contoId, {
       params: params
