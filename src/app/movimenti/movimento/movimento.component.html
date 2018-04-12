@@ -1,6 +1,6 @@
 <a class="list-group-item clearfix" >
   <div class="row">
-    <div class="col-2">
+    <div class="col-1">
       <div ngbDropdown class="d-inline-block">
         <button class="btn btn-outline-primary btn-sm" id="categoryDropdown" ngbDropdownToggle>
           <span [class]="getCategoriaIcon()" [ngStyle]="{ color: getCategoriaColoreById() }" style="margin-right: 20px"  placement="top" [ngbTooltip]="getCategoriaDescription()"></span>
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="col-8 pointer" (click)="isVisible = !isVisible"  >
+    <div class="col-9 pointer" (click)="isVisible = !isVisible"  >
       <span class="align-middle" style="font-weight:bold"> {{movimento.type}}</span>
     </div>
     <div class="col-1 pointer" (click)="isVisible = !isVisible">
