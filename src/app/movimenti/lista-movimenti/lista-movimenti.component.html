@@ -53,7 +53,7 @@
     <ngb-tab title="Spese" id="OUT">
       <ng-template ngbTabContent>
         <h4>
-                Totale spese nel periodo: {{ getTotaleUscite() }} €
+                Totale spese nel periodo: {{ getTotaleUscite() | currency:'EUR':'symbol' }}
         </h4>
         <div class="row justify-content-center">
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
@@ -113,7 +113,7 @@
     <ngb-tab title="Entrate" id="IN">
       <ng-template ngbTabContent>
         <h4 class="row">
-            Totale entrate nel periodo: {{ getTotaleEntrate()}} €
+            Totale entrate nel periodo: {{ getTotaleEntrate() | currency:'EUR':'symbol'}}
         </h4>
         <div class="row justify-content-center">
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">

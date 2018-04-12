@@ -19,7 +19,7 @@
       <span class="align-middle">{{ movimento.data_movimento | date:'shortDate':'':'it'}}</span>
     </div>
     <div class="col-1 pointer" (click)="isVisible = !isVisible">
-      <span class="align-middle importo">{{ movimento.getAbsAmount()}} €</span>
+      <span class="align-middle importo">{{ movimento.getAbsAmount() | currency:'EUR':'symbol'}}</span>
     </div>
   </div>
 </a>
