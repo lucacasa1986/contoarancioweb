@@ -12,14 +12,13 @@ import { MovimentoServiceService } from '../movimento-service.service';
 export class GraficoCategorieComponent implements OnChanges, AfterViewInit {
 
   @Input() title:string;
-  @Input() public categorie;
   @Input() dateFrom:Date;
   @Input() dateTo:Date;
   @Input() contoId:number;
   @ViewChild('theCanvas') canvas: ElementRef;
   months = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
   chart:Chart;
-  categorieSelezionate = [];
+  @Input("categorie") public categorieSelezionate:object[] = [];
 
   constructor(private _service:MovimentoServiceService) { }
 
@@ -85,7 +84,9 @@ export class GraficoCategorieComponent implements OnChanges, AfterViewInit {
               borderColor: element["colore"],
               data: [],
               label: element["descrizione"],
-              fill: false
+              fill: false,
+              showLine: false,
+              pointRadius: 9
             }
             dataset.data = this.generateData(element["rilevazioni"]);
             this.chart.data.datasets.push(dataset);
@@ -101,21 +102,10 @@ export class GraficoCategorieComponent implements OnChanges, AfterViewInit {
     
   }
 
-  toggleCategory(categoria:{}) {
-    categoria["showGraph"] = !categoria["showGraph"];
-    this.categorieSelezionate = this.categorie.filter(function(categoria, index, array) {
-      if( categoria["showGraph"]) {
-        return true;
-      }
-      else {
-        return false;
-      }
-    });
-    this.updateDatiGrafico();
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     // changes.prop contains the old and the new value...
+    console.log('changes =');
+    console.log(changes);
     if ( this.chart) {
       this.updateDatiGrafico();
     }

@@ -37,6 +37,7 @@ export class ListaMovimentiComponent implements OnInit {
   public uscite:Movimento[] = [];
   public entrate:Movimento[] = [];
   public categorie;
+  public categorieSelezionate:object[] = [];
   andamenti:{};
 
   selectedTab = "OUT";
@@ -155,12 +156,6 @@ export class ListaMovimentiComponent implements OnInit {
     else this.entrate = this.entrate.slice(0);
   }
 
-  isAnyCategorySelected(type:string):boolean {
-    return this.categorie.some(category => {
-      return category["selected"] && category["tipo"] === type;
-    })
-   }
-
   getCategoryById(category_id:Number){
     let categoria = null;
     this.categorie.forEach(element => {
@@ -173,6 +168,7 @@ export class ListaMovimentiComponent implements OnInit {
 
   toggleCategory(categoria:{}) {
     categoria["selected"] = !categoria["selected"];
+    this.categorieSelezionate = this.getSelectedCategories();
     this.uscite.length = 0;
     this.entrate.length = 0;
     if ( this.isAnyCategorySelected('OUT')) {
@@ -209,14 +205,15 @@ export class ListaMovimentiComponent implements OnInit {
 
   getSelectedCategories():Array<{}> {
     return this.categorie.filter(function(categoria, index, array) {
-      if( categoria["selected"]) {
-        return true;
-      }
-      else {
-        return false;
-      }
+      return categoria["selected"];
     });
   }
+
+  isAnyCategorySelected(type:string):boolean {
+    return this.categorie.some(category => {
+      return category["selected"] && category["tipo"] === type;
+    })
+   }
 
   onTabChange(event:NgbTabChangeEvent){
     this.selectedTab = event.nextId;
