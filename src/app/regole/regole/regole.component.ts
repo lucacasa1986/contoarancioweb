@@ -54,7 +54,9 @@ export class RegoleComponent implements OnInit {
         this.regole = rules;
       }
     )
-    this.selectedRegola = new Regola(null,null,'');
+    let regola = new Regola(null,null,'');
+    regola.addCondizione(new Condizione());
+    this.changeSelectedRegola(regola);
   }
 
   changeSelectedRegola(regola:Regola){
@@ -62,7 +64,6 @@ export class RegoleComponent implements OnInit {
   }
 
   addRegolaToList(regola:Regola) {
-    debugger;
     this.listaRegole.addRuleToList(regola);
   }
 

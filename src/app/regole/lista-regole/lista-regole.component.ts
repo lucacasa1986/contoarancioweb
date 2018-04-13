@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Regola } from '../regole.model';
+import { Regola, Condizione } from '../regole.model';
 import { RegoleService } from '../../regole.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -27,6 +27,7 @@ export class ListaRegoleComponent implements OnInit {
 
   resetRegola() {
     this.currentRegola = new Regola(null,null,'');
+    this.currentRegola.addCondizione(new Condizione());
     this.selectedRegola.emit(this.currentRegola);
   }
 

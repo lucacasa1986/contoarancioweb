@@ -6,47 +6,39 @@
         
     </div>
     <div class="form-row">
-        <div class="form-group col-md-6">
-          <label class="center-block">Nome regola
-            <input class="form-control" formControlName="name">
-          </label>
+        <div class="form-group col">
+          <input class="form-control" formControlName="name" placeholder="Nome">
         </div>
-        <div class="form-group col-md-6">
-          <label >Categoria
+        <div class="form-group col">
             <select class="form-control" formControlName="category">
               <option *ngFor="let category of categories" [value]="category.id">{{category.descrizione}}</option>
             </select>
-          </label>
         </div>
     </div>
     
-    <div formArrayName="condizioni" class="well well-lg">
+    <div formArrayName="condizioni">
         <h4>Condizioni</h4>
-        <div *ngFor="let condizione of condizioni.controls; let i=index" [formGroupName]="i" >
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                  <label >Operatore
-                    <select class="form-control" formControlName="field">
-                      <option *ngFor="let field of fields" [value]="field.value">{{field.display}}</option>
-                    </select>
-                  </label>
+        <div *ngFor="let condizione of condizioni.controls; let i=index" [formGroupName]="i" class="card" style="margin-bottom: 10px">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-4">
+                      <label >Campo</label>
+                      <select class="form-control form-control-sm" formControlName="field">
+                        <option *ngFor="let field of fields" [value]="field.value">{{field.display}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-4">
+                      <label >Operatore</label>
+                      <select class="form-control form-control-sm" formControlName="operator">
+                        <option *ngFor="let operator of operators" [value]="operator.value">{{operator.display}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-4">
+                      <label >Valore:</label>
+                      <input class="form-control form-control-sm" formControlName="value">
+                    </div>
                 </div>
-                <div class="form-group col-md-3">
-                  <label >Operatore
-                    <select class="form-control" formControlName="operator">
-                      <option *ngFor="let operator of operators" [value]="operator.value">{{operator.display}}</option>
-                    </select>
-                  </label>
-                </div>
-                <div class="form-group col-md-3">
-                  <label class="center-block">Valore:
-                    <input class="form-control" formControlName="value">
-                  </label>
-                </div>
-                <div class="form-group col-md-3">
-                    <button (click)="removeCondition(i)" type="button" class="btn btn-danger">Rimuovi</button>
-                </div>
-                
+                <a (click)="removeCondition(i)" class="btn btn-danger" tabIndex>Rimuovi</a>
             </div>
         </div>
         <button (click)="addCondizione()" type="button" class="btn btn-primary">Aggiungi condizione</button>
