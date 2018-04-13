@@ -106,6 +106,7 @@ export class ListaMovimentiComponent implements OnInit {
         }
         this.uscite = this.uscite.slice(0);
         this.entrate = this.entrate.slice(0);
+        this.applyCategoryFilter();
       },
       err => console.error(err),
       () => {}
@@ -168,13 +169,17 @@ export class ListaMovimentiComponent implements OnInit {
 
   toggleCategory(categoria:{}) {
     categoria["selected"] = !categoria["selected"];
+    this.applyCategoryFilter();
+  }
+
+  applyCategoryFilter() {
     this.categorieSelezionate = this.getSelectedCategories();
     this.uscite.length = 0;
     this.entrate.length = 0;
     if ( this.isAnyCategorySelected('OUT')) {
       this.uscite = this.movimenti.filter( 
         movimento => {
-          categoria = this.getCategoryById(movimento.categoria_id);
+          let categoria = this.getCategoryById(movimento.categoria_id);
           return categoria && categoria["selected"] && movimento.amount <= 0;
         }
       )
@@ -189,7 +194,7 @@ export class ListaMovimentiComponent implements OnInit {
     if ( this.isAnyCategorySelected('IN')) {
       this.entrate = this.movimenti.filter( 
         movimento => {
-          categoria = this.getCategoryById(movimento.categoria_id);
+          let categoria = this.getCategoryById(movimento.categoria_id);
           return categoria && categoria["selected"] && movimento.amount > 0;
         }
       )
@@ -200,7 +205,6 @@ export class ListaMovimentiComponent implements OnInit {
         }
       )
     }
-
   }
 
   getSelectedCategories():Array<{}> {
