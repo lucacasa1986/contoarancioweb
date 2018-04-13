@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; 
+import { RegoleComponent } from '../../regole/regole/regole.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-conto',
@@ -11,13 +12,15 @@ export class ContoComponent implements OnInit {
   idConto:number;
 
   constructor(private route: ActivatedRoute) {
-    this.route.params.subscribe(res => {
-      console.log(res.idConto);
-      this.idConto = res.idConto;
-    });
-   }
+    this.route.parent.params.subscribe(
+      params => {this.idConto = params.idConto;}
+    )
+  }
 
   ngOnInit() {
+    this.route.parent.params.subscribe(
+      params => {this.idConto = params.idConto;}
+    )
   }
 
 }

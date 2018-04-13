@@ -1,12 +1,14 @@
-<form [formGroup]="form">
-  <div class="form-group">
-    <label for="emailField">Email</label>
-    <input type="email" class="form-control" id="emailField" name="email" formControlName="email" aria-describedby="emailHelp" placeholder="Inserisci email">
-  </div>
-  <div class="form-group">
-    <label for="passwordField">Password</label>
-    <input type="password" class="form-control" name="password" formControlName="password" id="passwordField" placeholder="Password">
-  </div>
-  <button type="submit" class="btn btn-success" (click)="login()">Login</button>
-  <a class="btn btn-primary" routerLink="/signup" role="button">Nuovo account</a>
-</form>
+<div class="container">
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label for="emailField">Email</label>
+      <input type="email" class="form-control" id="emailField" name="email" formControlName="email" aria-describedby="emailHelp" placeholder="Inserisci email">
+    </div>
+    <div class="form-group">
+      <label for="passwordField">Password</label>
+      <input type="password" class="form-control" name="password" formControlName="password" id="passwordField" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-success" (click)="login()">Login</button>
+    <a class="btn btn-primary" routerLink="/signup" role="button">Nuovo account</a>
+  </form>
+</div>

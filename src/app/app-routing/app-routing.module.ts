@@ -6,6 +6,8 @@ import { ContoComponent } from '../conti/conto/conto.component';
 import { LoginComponent } from '../login/login/login.component';
 import { AuthGuardService } from '../login/auth-guard.service';
 import { SignupComponent } from '../login/signup/signup.component';
+import { RegoleComponent } from '../regole/regole/regole.component';
+import { ContoContainerComponent } from '../conti/conto-container/conto-container.component';
 
 const routes: Routes = [
   {
@@ -15,8 +17,13 @@ const routes: Routes = [
   },
   {
     path: 'conto/:idConto',
-    component: ContoComponent,
-    canActivate: [AuthGuardService] 
+    component: ContoContainerComponent,
+    canActivate: [AuthGuardService],
+    children: [
+      { path: '', redirectTo: 'movimenti', pathMatch: 'full' },
+      { path: 'regole', component: RegoleComponent },
+      { path: 'movimenti', component: ContoComponent }
+    ]
   },
   {
     path: 'login',

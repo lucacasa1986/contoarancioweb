@@ -29,6 +29,12 @@ import { GraficoCategorieComponent } from './movimenti/grafico-categorie/grafico
 
 import { registerLocaleData } from '@angular/common';
 import localeIt from '@angular/common/locales/it';
+import { RegoleComponent } from './regole/regole/regole.component';
+import { ListaRegoleComponent } from './regole/lista-regole/lista-regole.component';
+import { RegolaComponent } from './regole/regola/regola.component';
+import { RegoleService } from './regole.service';
+import { RegolaDetailComponent } from './regole/regola-detail/regola-detail.component';
+import { ContoContainerComponent } from './conti/conto-container/conto-container.component';
 
 registerLocaleData(localeIt, 'it');
 
@@ -55,7 +61,12 @@ export function jwtOptionsFactory(tokenService) {
     SignupComponent,
     GraficoComponent,
     GraficoAndamentoComponent,
-    GraficoCategorieComponent
+    GraficoCategorieComponent,
+    RegoleComponent,
+    ListaRegoleComponent,
+    RegolaComponent,
+    RegolaDetailComponent,
+    ContoContainerComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, NgbModule.forRoot(), TagInputModule, BrowserAnimationsModule, ReactiveFormsModule, AppRoutingModule,
@@ -67,7 +78,8 @@ export function jwtOptionsFactory(tokenService) {
       }
     })
   ],
-  providers: [MovimentoServiceService, TagService, AuthService, AuthGuardService, JwtHelperService],
+  providers: [MovimentoServiceService, TagService, RegoleService, AuthService, AuthGuardService, JwtHelperService],
+  entryComponents: [RegoleComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,54 @@
+
+<form [formGroup]="regolaForm" (ngSubmit)="onSubmit()">
+    <div style="margin-bottom: 1em">
+        <button type="submit"
+                [disabled]="regolaForm.pristine" class="btn btn-success">Salva</button> &nbsp;
+        
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="center-block">Nome regola
+            <input class="form-control" formControlName="name">
+          </label>
+        </div>
+        <div class="form-group col-md-6">
+          <label >Categoria
+            <select class="form-control" formControlName="category">
+              <option *ngFor="let category of categories" [value]="category.id">{{category.descrizione}}</option>
+            </select>
+          </label>
+        </div>
+    </div>
+    
+    <div formArrayName="condizioni" class="well well-lg">
+        <h4>Condizioni</h4>
+        <div *ngFor="let condizione of condizioni.controls; let i=index" [formGroupName]="i" >
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label >Operatore
+                    <select class="form-control" formControlName="field">
+                      <option *ngFor="let field of fields" [value]="field.value">{{field.display}}</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="form-group col-md-3">
+                  <label >Operatore
+                    <select class="form-control" formControlName="operator">
+                      <option *ngFor="let operator of operators" [value]="operator.value">{{operator.display}}</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="center-block">Valore:
+                    <input class="form-control" formControlName="value">
+                  </label>
+                </div>
+                <div class="form-group col-md-3">
+                    <button (click)="removeCondition(i)" type="button" class="btn btn-danger">Rimuovi</button>
+                </div>
+                
+            </div>
+        </div>
+        <button (click)="addCondizione()" type="button" class="btn btn-primary">Aggiungi condizione</button>
+    </div>
+</form>

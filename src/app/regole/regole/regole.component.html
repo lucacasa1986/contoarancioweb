@@ -1,0 +1,12 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      
+      <app-lista-regole [regole]="regole" (selectedRegola)="changeSelectedRegola($event)" [idConto]="idConto"></app-lista-regole>
+    </div>
+    <div class="col-md-7">
+      <app-regola-detail #listaRegole [regola]="selectedRegola" [categories]="categorie" (newRuleAdded)="addRegolaToList($event)" ></app-regola-detail>
+    </div>
+  </div>
+</div>

@@ -1,28 +1,30 @@
-<form [formGroup]="form" (ngSubmit)="signup()">
-  <div class="form-group">
-    <label for="emailField">Email</label>
-    <input type="email" class="form-control" id="emailField" formControlName="email" placeholder="Inserisci email">
-  </div>
-  <div class="form-group">
-    <label for="passwordField">Password</label>
-    <input type="password" class="form-control" id="passwordField" formControlName="password" placeholder="Password">
-  </div>
-  <div class="form-group">
-    <label for="passwordVerifyField">Conferma Password</label>
-    <input type="password" class="form-control" id="passwordVerifyField" formControlName="passwordVerify"  placeholder="Conferma Password">
-  </div>
-  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Registra</button>
-</form>
-
-<div class="alert alert-danger" *ngIf="form.controls.passwordVerify.errors?.MatchPassword">Le password non coincidono</div>
-<div *ngIf="email.invalid && (email.dirty || email.touched)"
-     class="alert alert-danger">
-
-  <div *ngIf="email.errors.required">
-    L'indirizzo email è obbligatorio
-  </div>
-
-  <div *ngIf="email.errors.email">
-    Inserire un indirizzo mail valido
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="signup()">
+    <div class="form-group">
+      <label for="emailField">Email</label>
+      <input type="email" class="form-control" id="emailField" formControlName="email" placeholder="Inserisci email">
+    </div>
+    <div class="form-group">
+      <label for="passwordField">Password</label>
+      <input type="password" class="form-control" id="passwordField" formControlName="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="passwordVerifyField">Conferma Password</label>
+      <input type="password" class="form-control" id="passwordVerifyField" formControlName="passwordVerify"  placeholder="Conferma Password">
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Registra</button>
+  </form>
+  
+  <div class="alert alert-danger" *ngIf="form.controls.passwordVerify.errors?.MatchPassword">Le password non coincidono</div>
+  <div *ngIf="email.invalid && (email.dirty || email.touched)"
+        class="alert alert-danger">
+  
+    <div *ngIf="email.errors.required">
+      L'indirizzo email è obbligatorio
+    </div>
+  
+    <div *ngIf="email.errors.email">
+      Inserire un indirizzo mail valido
+    </div>
   </div>
 </div>
