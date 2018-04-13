@@ -8,10 +8,8 @@
       *ngFor="let regola of regole" style="cursor: pointer" (click)="selectRegola(regola)">
                   {{ regola.name }}
                   <span class="pull-right">
-                      <button type="button" class="btn btn-xs btn-danger" (click)="askForDelete(content, regola)">
-                        <span class="fa fa-minus-circle" aria-hidden="true"></span>
-                      </button>
-                    </span>
+                        <span class="fa fa-minus-circle" (click)="askForDelete(content, regola)" aria-hidden="true"></span>
+                  </span>
       </a>
 </ul>
 <ng-template #content let-c="close" let-d="dismiss">
