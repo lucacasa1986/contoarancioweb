@@ -59,6 +59,21 @@ export class ListaMovimentiComponent implements OnInit {
     this._service.getAllCategories().subscribe(
       data => {
         this.categorie = data
+        this.categorie.unshift({
+          "colore": "black",
+          descrizione:"Non categorizzate",
+          icon_class: 'fa fa-question',
+          id: null,
+          tipo: 'OUT'
+        });
+        
+        this.categorie.unshift({
+          "colore": "black",
+          descrizione:"Non categorizzate",
+          icon_class: 'fa fa-question',
+          id: null,
+          tipo: 'IN'
+        });
         this.getMovimenti();
         this.getAndamento();
       }
@@ -96,7 +111,12 @@ export class ListaMovimentiComponent implements OnInit {
         this.entrate.length = 0;
         for ( let d of lista_movimenti){
           let movimento = new Movimento(d);
+
           this.movimenti.push(movimento);
+          let category = this.getCategoryById(movimento.categoria_id);
+          if ( category ) {
+            category["selected"] = true;
+          }
           if ( movimento.amount > 0 )
           {
             this.entrate.push(movimento);
@@ -106,7 +126,6 @@ export class ListaMovimentiComponent implements OnInit {
         }
         this.uscite = this.uscite.slice(0);
         this.entrate = this.entrate.slice(0);
-        this.applyCategoryFilter();
       },
       err => console.error(err),
       () => {}

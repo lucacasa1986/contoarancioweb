@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MovimentoServiceService } from '../../movimenti/movimento-service.service';
 import { RegoleService } from '../../regole.service';
 import { Regola, Condizione } from '../regole.model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ListaRegoleComponent } from '../lista-regole/lista-regole.component';
 
 @Component({
@@ -20,7 +20,7 @@ export class RegoleComponent implements OnInit {
   @ViewChild(ListaRegoleComponent) listaRegole:ListaRegoleComponent;
 
   constructor(private _service:MovimentoServiceService,
-     private ruleService:RegoleService, private router: Router , private route: ActivatedRoute) { }
+     private ruleService:RegoleService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.parent.params.subscribe(
