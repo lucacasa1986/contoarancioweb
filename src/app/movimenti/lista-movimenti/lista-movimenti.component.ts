@@ -40,7 +40,8 @@ export class ListaMovimentiComponent implements OnInit {
   public categorieSelezionate:object[] = [];
   andamenti:{};
 
-  selectedTab = "OUT";
+  selectedOutTab = 'GRAPHS'; //LIST
+  selectedInTab = 'GRAPHS';
 
   /* pagination*/
   uscitePage:number = 1;
@@ -237,9 +238,5 @@ export class ListaMovimentiComponent implements OnInit {
       return category["selected"] && category["tipo"] === type;
     })
    }
-
-  onTabChange(event:NgbTabChangeEvent){
-    this.selectedTab = event.nextId;
-  }
 
 }

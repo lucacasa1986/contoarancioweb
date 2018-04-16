@@ -12,3 +12,7 @@
 .carousel-indicators li.active {
     background-color: darkgrey !important;
 }
+
+a {
+    cursor: pointer;
+}
