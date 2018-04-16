@@ -1,5 +1,6 @@
 .carousel-indicators {
     bottom:-50px;
+    
   }  
 .carousel-inner {
     margin-bottom:50px;
@@ -7,10 +8,12 @@
 
 .carousel-indicators li {
     background-color: grey !important;
+    cursor: pointer;
 }
 
 .carousel-indicators li.active {
     background-color: darkgrey !important;
+    cursor: pointer;
 }
 
 a {
