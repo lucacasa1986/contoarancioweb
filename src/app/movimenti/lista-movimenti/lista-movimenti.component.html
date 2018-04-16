@@ -109,7 +109,7 @@
                 </div>
             </div>
             
-            <div class="row" style="margin-top:25px">
+            <div class="row">
                 <div class="col">
                     <app-movimento *ngFor="let movimento of uscite | slice: (uscitePage * 10) - 10 :uscitePage * 10" 
                     [movimento]="movimento" 
@@ -158,7 +158,7 @@
                 </div>
             </div>
             
-            <div class="row" style="margin-top: 25px">
+            <div class="row">
                 <div class="col">
                     <app-movimento *ngFor="let movimento of entrate | slice: (entratePage * 10) - 10 :entratePage * 10" 
                         [movimento]="movimento" 
