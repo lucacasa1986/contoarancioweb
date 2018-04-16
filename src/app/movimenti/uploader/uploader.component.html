@@ -1,38 +1,33 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+                <form name="uploadForm" class="form-inline">
+                        <div class="form-group mb-2">
+                            <input type="file" class="form-control-file"
+                                id="file"
+                                (change)="handleFileInput($event.target.files)">
+                        </div>
+                        <div class="form-group mx-sm-3 mb-2">
+                            <label for="selectFileType" style="margin-right: 5px">Tipo movimenti</label>
+                            <select class="form-control" [(ngModel)]="fileType" name="selectFileType" id="selectFileType">
+                                <option [ngValue]="'CONTO'">Conto</option>
+                                <option [ngValue]="'CARTA'">Carta</option>
+                            </select>
+                        </div>           
+                        <button class="btn btn-success mb-2" (click)="uploadFileToActivity()">Carica movimenti</button>
+                </form>
+        </div>
+    </div>
+    <div class="row" *ngIf="showSuccessAlert">
+        <div class="alert alert-success">
+            <strong>Movimenti caricati!</strong>
+        </div>
+    </div>
+    <div class="row" *ngIf="showErrorAlert">
+        <div class="alert alert-danger">
+            <strong>Errore</strong> Movimenti non importati. Verificare il file excel con i movimenti
+        </div>
+    </div>
+</div>
 
-<div class="row">
-    <div class="col">
-            <form name="uploadForm" class="form-inline">
-                    <div class="form-group mb-2">
-                        <input type="file" class="form-control-file"
-                            id="file"
-                            (change)="handleFileInput($event.target.files)">
-                    </div>
-                    <div class="form-group mx-sm-3 mb-2">
-                        <label for="selectFileType" style="margin-right: 5px">Tipo movimenti</label>
-                        <select class="form-control" [(ngModel)]="fileType" name="selectFileType" id="selectFileType">
-                            <option [ngValue]="'CONTO'">Conto</option>
-                            <option [ngValue]="'CARTA'">Carta</option>
-                        </select>
-                    </div>           
-                    <button class="btn btn-success mb-2" (click)="uploadFileToActivity()">Carica movimenti</button>
-            </form>
-    </div>
-    
-    <!--<div class="col-sm-6 form-group">
-        <label for="file">Choose File</label>
-        <input type="file" class="form-control"
-           id="file"
-           (change)="handleFileInput($event.target.files)">
-    </div>-->
 
-</div>
-<div class="row" *ngIf="showSuccessAlert">
-    <div class="alert alert-success">
-        <strong>Movimenti caricati!</strong>
-    </div>
-</div>
-<div class="row" *ngIf="showErrorAlert">
-    <div class="alert alert-danger">
-        <strong>Errore</strong> Movimenti non importati. Verificare il file excel con i movimenti
-    </div>
-</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MovimentoServiceService } from '../movimento-service.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-uploader',
@@ -13,11 +14,14 @@ export class UploaderComponent implements OnInit {
   showSuccessAlert:Boolean = false;
   showErrorAlert:Boolean = false;
 
-  @Input() idConto:number;
+  idConto:number;
 
-  constructor(private _service:MovimentoServiceService) { }
+  constructor(private _service:MovimentoServiceService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.parent.params.subscribe(
+      params => {this.idConto = params.idConto;}
+    )
   }
 
   handleFileInput(files: FileList) {

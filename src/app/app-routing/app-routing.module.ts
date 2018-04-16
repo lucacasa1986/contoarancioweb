@@ -8,6 +8,7 @@ import { AuthGuardService } from '../login/auth-guard.service';
 import { SignupComponent } from '../login/signup/signup.component';
 import { RegoleComponent } from '../regole/regole/regole.component';
 import { ContoContainerComponent } from '../conti/conto-container/conto-container.component';
+import { UploaderComponent } from '../movimenti/uploader/uploader.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'movimenti', pathMatch: 'full' },
       { path: 'regole', component: RegoleComponent },
-      { path: 'movimenti', component: ContoComponent }
+      { path: 'movimenti', component: ContoComponent },
+      { path: 'upload', component: UploaderComponent}
     ]
   },
   {
