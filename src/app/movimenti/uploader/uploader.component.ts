@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MovimentoServiceService } from '../movimento-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { Movimento } from '../movimento.model';
 
 @Component({
   selector: 'app-uploader',
@@ -16,11 +17,34 @@ export class UploaderComponent implements OnInit {
 
   idConto:number;
 
+  movimentiCaricati:Movimento[] = [];
+  categorie:Object[] = [];
+
   constructor(private _service:MovimentoServiceService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.parent.params.subscribe(
       params => {this.idConto = params.idConto;}
+    )
+    this._service.getAllCategories().subscribe(
+      data => {
+        this.categorie = data as Object[];
+        this.categorie.unshift({
+          "colore": "black",
+          descrizione:"Non categorizzate",
+          icon_class: 'fa fa-question',
+          id: null,
+          tipo: 'OUT'
+        });
+        
+        this.categorie.unshift({
+          "colore": "black",
+          descrizione:"Non categorizzate",
+          icon_class: 'fa fa-question',
+          id: null,
+          tipo: 'IN'
+        });
+      }
     )
   }
 
@@ -31,6 +55,12 @@ export class UploaderComponent implements OnInit {
   uploadFileToActivity() {
     this._service.uploadFile(this.idConto, this.fileToUpload, this.fileType).subscribe(data => {
       // do something, if upload success
+        let lista_movimenti = data as Object[];
+        this.movimentiCaricati.length = 0;
+        for ( let d of lista_movimenti){
+          let movimento = new Movimento(d);
+          this.movimentiCaricati.push(movimento);
+        }
         this.showSuccessAlert = true;
         setTimeout(() => {
           this.showSuccessAlert = false;

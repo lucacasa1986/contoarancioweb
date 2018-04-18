@@ -28,6 +28,13 @@
             <strong>Errore</strong> Movimenti non importati. Verificare il file excel con i movimenti
         </div>
     </div>
+    <div class="row" *ngIf="movimentiCaricati">
+        <div class="col">
+            <app-movimento *ngFor="let movimento of movimentiCaricati" 
+                    [movimento]="movimento" 
+                    [categorie]="categorie"></app-movimento>
+        </div>
+    </div>
 </div>
 
 

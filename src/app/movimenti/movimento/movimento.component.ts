@@ -34,6 +34,7 @@ export class MovimentoComponent implements OnInit {
   {
     this.movimento["categoria_id"] = categoria["id"];
     //update!
+    debugger;
     this._service.updateMovimento(this.movimento).subscribe(
       data => { this.movimentoUpdate.emit(this.movimento);}
     )
