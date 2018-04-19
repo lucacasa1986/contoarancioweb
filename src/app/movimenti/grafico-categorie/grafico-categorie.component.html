@@ -1,12 +1,3 @@
-<!--div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-outline-primary" 
-  [ngClass]="{ 'active': categoria.showGraph }" 
-  *ngFor="let categoria of categorie | categoryFilter:'OUT'" 
-  (click)="toggleCategory(categoria)"
-  placement="top" [ngbTooltip]="categoria.descrizione">
-      <span [class]="categoria.icon_class"  [ngStyle]="{ color: categoria.colore }"></span>
-  </button>
-</div-->
 <div class="chart-container" style="position: relative;">
   <canvas #theCanvas> </canvas>
 </div>

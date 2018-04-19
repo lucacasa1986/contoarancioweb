@@ -34,6 +34,28 @@ export class Movimento {
     }
 }
 
+export class Categoria {
+    public selected:boolean = false;
+    
+    constructor(public id:number,
+         public descrizione:string, 
+         public colore:string, 
+         public icon_class:string,
+          public tipo:string,
+        public sottocategorie:SottoCategoria[]) {}
+
+    
+
+    addSottoCategoria(element:SottoCategoria)
+    {
+        this.sottocategorie.push(element);
+    }
+}
+
+export class SottoCategoria {
+    constructor(public id:number, public categoria_id:number, public descrizione:string) {}
+}
+
 export class Tag {
     display: string;
     value: string;

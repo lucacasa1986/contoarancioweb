@@ -26,26 +26,11 @@ export class UploaderComponent implements OnInit {
     this.route.parent.params.subscribe(
       params => {this.idConto = params.idConto;}
     )
-    this._service.getAllCategories().subscribe(
-      data => {
-        this.categorie = data as Object[];
-        this.categorie.unshift({
-          "colore": "black",
-          descrizione:"Non categorizzate",
-          icon_class: 'fa fa-question',
-          id: null,
-          tipo: 'OUT'
-        });
-        
-        this.categorie.unshift({
-          "colore": "black",
-          descrizione:"Non categorizzate",
-          icon_class: 'fa fa-question',
-          id: null,
-          tipo: 'IN'
-        });
+    this._service.allCategories.subscribe(
+      value => {
+        this.categorie = value;
       }
-    )
+    );
   }
 
   handleFileInput(files: FileList) {

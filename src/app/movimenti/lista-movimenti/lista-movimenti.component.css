@@ -19,3 +19,13 @@
 a {
     cursor: pointer;
 }
+/*
+.btn.btn-link.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn.btn-link.active span {
+    color: white !important;
+}
+*/

@@ -1,11 +1,42 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Movimento } from './movimento.model';
+import { Movimento, Categoria, SottoCategoria } from './movimento.model';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MovimentoServiceService {
 
+  private _categories: BehaviorSubject<Categoria[]> = new BehaviorSubject([]);
+
+  public readonly allCategories: Observable<Categoria[]> = this._categories.asObservable();
+
+
   constructor(private http:HttpClient) { }
+
+  init() {
+    this.getAllCategories().subscribe(data => {
+      let categories = (data as any[]).map(function(element){
+        let id = element["id"];
+        let descrizione = element["descrizione"];
+        let icon_class = element["icon_class"];
+        let colore = element["colore"];
+        let tipo = element["tipo"];
+        let categoria = new Categoria(id, descrizione, colore, icon_class, tipo, []);
+        for (let subelement in element["sottocategorie"]){
+          let subCategory = new SottoCategoria(subelement["id"], id, subelement["descrizione"]);
+          categoria.addSottoCategoria(subCategory);
+        }
+        return categoria;
+      });
+
+      categories.unshift(new Categoria(null, "Non categorizzate", "black", "fa fa-question", "OUT", []));
+      categories.unshift(new Categoria(null, "Non categorizzate", "black", "fa fa-question", "IN", []));
+      this._categories.next(categories);
+      
+    });
+
+  }
 
   getConti() {
     return this.http.get("/api/conti");

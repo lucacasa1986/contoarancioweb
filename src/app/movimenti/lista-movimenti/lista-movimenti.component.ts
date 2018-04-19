@@ -57,28 +57,13 @@ export class ListaMovimentiComponent implements OnInit {
   }
 
   firstLoad() {
-    this._service.getAllCategories().subscribe(
-      data => {
-        this.categorie = data
-        this.categorie.unshift({
-          "colore": "black",
-          descrizione:"Non categorizzate",
-          icon_class: 'fa fa-question',
-          id: null,
-          tipo: 'OUT'
-        });
-        
-        this.categorie.unshift({
-          "colore": "black",
-          descrizione:"Non categorizzate",
-          icon_class: 'fa fa-question',
-          id: null,
-          tipo: 'IN'
-        });
-        this.getMovimenti();
-        this.getAndamento();
+    this._service.allCategories.subscribe(
+      value => {
+        this.categorie = value;
       }
-    )
+    );
+    this.getMovimenti();
+    this.getAndamento();
   }
 
   changePeriod(period:string) {
@@ -125,6 +110,7 @@ export class ListaMovimentiComponent implements OnInit {
             this.uscite.push(movimento);
           }
         }
+        this.movimenti = this.movimenti.slice(0);
         this.uscite = this.uscite.slice(0);
         this.entrate = this.entrate.slice(0);
       },
@@ -143,12 +129,6 @@ export class ListaMovimentiComponent implements OnInit {
       () => {}
 
     );
-  }
-
-  getCategorie() {
-    this._service.getAllCategories().subscribe(
-      data => {this.categorie = data }
-    )
   }
 
   onDateFromChange(event) {
@@ -175,6 +155,7 @@ export class ListaMovimentiComponent implements OnInit {
     if( movimento.amount <= 0)
       this.uscite = this.uscite.slice(0);
     else this.entrate = this.entrate.slice(0);
+    this.movimenti = this.movimenti.slice(0);
   }
 
   getCategoryById(category_id:Number){

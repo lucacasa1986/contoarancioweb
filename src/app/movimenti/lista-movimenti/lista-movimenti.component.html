@@ -65,12 +65,12 @@
         </ul>
         <div class="row justify-content-center">
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-outline-primary" 
+                <button type="button" class="btn btn-link" 
                 [ngClass]="{ 'active': categoria.selected }" 
-                *ngFor="let categoria of categorie | categoryFilter:'OUT'" 
+                *ngFor="let categoria of categorie | categoryFilter:'OUT':movimenti" 
                 (click)="toggleCategory(categoria)"
                 placement="top" [ngbTooltip]="categoria.descrizione">
-                    <span [class]="categoria.icon_class"  [ngStyle]="{ color: categoria.colore }"></span>
+                    <span [class]="categoria.icon_class"  [ngStyle]="{ 'color': categoria.selected ? categoria.colore : 'darkgrey' }"></span>
                 </button>
             </div>
         </div>
@@ -135,12 +135,12 @@
         </ul>
         <div class="row justify-content-center">
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-outline-primary" 
+                <button type="button" class="btn btn-link" 
                 [ngClass]="{ 'active': categoria.selected }" 
-                *ngFor="let categoria of categorie | categoryFilter:'IN'" 
+                *ngFor="let categoria of categorie | categoryFilter:'IN':movimenti" 
                 (click)="toggleCategory(categoria)"
                 placement="top" [ngbTooltip]="categoria.descrizione">
-                    <span [class]="categoria.icon_class"  [ngStyle]="{ color: categoria.colore }"></span>
+                    <span [class]="categoria.icon_class"  [ngStyle]="{ 'color': categoria.selected ? categoria.colore : 'darkgrey' }"></span>
                 </button>
             </div>
         </div>

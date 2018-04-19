@@ -26,11 +26,11 @@ export class RegoleComponent implements OnInit {
     this.route.parent.params.subscribe(
       params => {this.idConto = params.idConto;}
     )
-    this._service.getAllCategories().subscribe(
-      data => {
-        this.categorie = data as Object[]
+    this._service.allCategories.subscribe(
+      value => {
+        this.categorie = value;
       }
-    )
+    );
     this.ruleService.getRegole().subscribe(
       data => {
         let rules:Regola[] = [];
