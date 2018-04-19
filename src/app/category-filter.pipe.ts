@@ -10,7 +10,6 @@ export class CategoryFilterPipe implements PipeTransform {
     if (!value || !arg1) {
       return value;
     }
-    debugger;
     if( arg2) {
       return value.filter(item => {
           if (item["tipo"] == arg1){
