@@ -1,7 +1,7 @@
 export class Regola {
     conditions:Condizione[] = [];
 
-    constructor(public id:number, public category_id:number, public name:string){
+    constructor(public id:number, public category_id:number, public subcategory_id:number, public name:string){
         
     }
 

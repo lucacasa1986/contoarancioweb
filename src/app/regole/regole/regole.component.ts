@@ -37,7 +37,7 @@ export class RegoleComponent implements OnInit {
         let rules_json = data as Object[];
         rules_json.forEach(
           rule_json => {
-            let rule = new Regola(rule_json["id"], rule_json["category_id"], rule_json["name"]);
+            let rule = new Regola(rule_json["id"], rule_json["category_id"], rule_json["subcategory_id"], rule_json["name"]);
             let conditions_json = rule_json["conditions"];
             conditions_json.forEach(
               condition_json => {
@@ -54,7 +54,7 @@ export class RegoleComponent implements OnInit {
         this.regole = rules;
       }
     )
-    let regola = new Regola(null,null,'');
+    let regola = new Regola(null,null,null,'');
     regola.addCondizione(new Condizione());
     this.changeSelectedRegola(regola);
   }

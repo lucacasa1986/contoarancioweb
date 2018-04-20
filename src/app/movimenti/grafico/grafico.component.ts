@@ -1,5 +1,5 @@
 import { Component, AfterContentInit, Input, SimpleChanges, OnChanges, AfterContentChecked, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { Movimento } from '../movimento.model';
+import { Movimento, Categoria } from '../movimento.model';
 import { Chart } from 'chart.js';
 
 @Component({
@@ -11,26 +11,31 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
 
   @Input() title:string;
   @Input() public movimenti:Movimento[];
-  @Input() public categorie;
+  @Input() public categorie:Categoria[];
   @ViewChild('theCanvas') canvas: ElementRef;
   chart:Chart;
+  private stateDetail:boolean = false; //detail
 
   constructor() { }
 
   ngAfterViewInit() {
       let ctx = this.canvas.nativeElement.getContext('2d');
       this.canvas.nativeElement.onclick = evt => {
-        console.log('clicked');
-        var activePoints = this.chart.getElementsAtEvent(evt);
+        if ( !this.stateDetail) {
+          
+          var activePoints = this.chart.getElementsAtEvent(evt);
           if (activePoints[0]) {
             var chartData = activePoints[0]['_chart'].config.data;
             var idx = activePoints[0]['_index'];
     
             var label = chartData.labels[idx];
             var value = chartData.datasets[0].data[idx];
-    
-            console.log("Label =" + label + ", value = " + value);
+            this.updateChartPerCategoria(label);
           }
+        }else {
+          this.updateChart();
+        }
+        this.stateDetail = !this.stateDetail;
       }
       this.chart = new Chart(ctx, {
         type: 'doughnut',
@@ -55,6 +60,88 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
       if( this.movimenti) {
         this.updateChart();
       }
+  }
+
+  lightenDarkenColor = function (col, amt) {
+    var usePound = false;
+    if (col[0] == "#") {
+      col = col.slice(1);
+      usePound = true;
+    }
+    var num = parseInt(col, 16);
+    var r = (num >> 16) + amt;
+    if (r > 255) {
+      r = 255;
+    } else if (r < 0) {
+      r = 0;
+    }
+    var b = ((num >> 8) & 0x00FF) + amt;
+    if (b > 255) {
+      b = 255;
+    } else if (b < 0) {
+      b = 0;
+    }
+    var g = (num & 0x0000FF) + amt;
+    if (g > 255) {
+      g = 255;
+    } else if (g < 0) {
+      g = 0;
+    }
+    return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
+  }
+
+  updateChartPerCategoria(categoria:string) {
+    this.chart.data.labels = [];
+    this.chart.data.datasets[0].backgroundColor = [];
+    this.chart.data.datasets[0].data = [];
+    let categoriaSelezionata:Categoria;
+    for ( let currCategoria of this.categorie){
+      if (currCategoria.descrizione === categoria){
+        categoriaSelezionata = currCategoria;
+        break;
+      }
+    }
+    if( categoriaSelezionata) {
+      this.chart.data.labels.push("Altro");
+      this.chart.data.datasets[0].backgroundColor.push(categoriaSelezionata.colore);
+      this.chart.data.datasets[0].data.push(0);
+      for ( let m of this.movimenti) {
+        let categoria_movimento = m.categoria_id; 
+        if( categoria_movimento === categoriaSelezionata.id) {
+          //movimento della categoria selezionata
+          //vediamo se e assegnato ad una sottocategoria
+          if (m.sottocategoria_id) {
+            for ( let c of categoriaSelezionata.sottocategorie) {
+              if( c.id == m.sottocategoria_id) {
+                //taac
+                let index = this.chart.data.labels.indexOf(c.descrizione);
+                if ( index > -1 )
+                {
+                  let current_amount = this.chart.data.datasets[0].data[index];
+                  let new_amount = current_amount + m.getAbsAmount();
+                  this.chart.data.datasets[0].data[index] = new_amount;
+                }else {
+                  let new_size = this.chart.data.labels.push(c.descrizione);
+                  let index = new_size - 1;
+                  let col_modifier = 40 * ( index % 2 == 0 ? -1 : 1)
+                  let colore_mod = this.lightenDarkenColor(categoriaSelezionata.colore, col_modifier );
+                  this.chart.data.datasets[0].backgroundColor.push(colore_mod);
+                  this.chart.data.datasets[0].data.push(m.getAbsAmount());
+                }
+              }
+            }
+          }else {
+            // non sottocategorizzato
+            let current_amount = this.chart.data.datasets[0].data[0];
+            let new_amount = current_amount + m.getAbsAmount();
+            this.chart.data.datasets[0].data[0] = new_amount;
+          }
+          
+        }
+      }
+    }
+    
+    this.chart.update();
   }
 
   updateChart() {

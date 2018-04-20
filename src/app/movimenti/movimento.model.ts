@@ -7,6 +7,7 @@ export class Movimento {
     amount: number;
     data_movimento: Date;
     categoria_id: Number;
+    sottocategoria_id: Number;
     tags: Tag[] = [];
     tipo:string = "OUT";
 
@@ -19,6 +20,7 @@ export class Movimento {
         this.description = json_o["description"];
         this.data_movimento = json_o["date"];
         this.categoria_id = json_o["categoria_id"];
+        this.sottocategoria_id = json_o["sottocategoria_id"];
         let id = json_o["id"];
         if ( id instanceof Array){
             id = id[0];

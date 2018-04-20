@@ -23,7 +23,7 @@ export class MovimentoServiceService {
         let colore = element["colore"];
         let tipo = element["tipo"];
         let categoria = new Categoria(id, descrizione, colore, icon_class, tipo, []);
-        for (let subelement in element["sottocategorie"]){
+        for (let subelement of element["sottocategorie"]){
           let subCategory = new SottoCategoria(subelement["id"], id, subelement["descrizione"]);
           categoria.addSottoCategoria(subCategory);
         }

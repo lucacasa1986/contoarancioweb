@@ -1,7 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Movimento, Tag } from '../movimento.model';
+import { Movimento, Tag, Categoria } from '../movimento.model';
 import { MovimentoServiceService } from '../movimento-service.service';
 import { TagService } from '../../tag.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-movimento',
@@ -11,30 +17,24 @@ import { TagService } from '../../tag.service';
 export class MovimentoComponent implements OnInit {
 
   @Input() movimento: Movimento;
-  @Input() categorie: Object[];
+  @Input() categorie: Categoria[];
   @Output() movimentoUpdate: EventEmitter<Movimento> = new EventEmitter<Movimento>();
   isVisible: Boolean = false;
   subcategories: Tag[];
+  private categoriaSelezionata:Categoria;
 
   constructor(private _service:MovimentoServiceService, private tagService:TagService) { }
 
   ngOnInit() {
     this.subcategories = this.tagService.allTags;
-  }
-
-  onChangeSelectedCategory(value) {
-    this.movimento["categoria_id"] = value;
-    //update!
-    this._service.updateMovimento(this.movimento).subscribe(
-      data => { this.movimentoUpdate.emit(this.movimento);}
-    )
+    this.categoriaSelezionata = this.getCategoria();
   }
 
   cambiaCategoria(categoria:{})
   {
     this.movimento["categoria_id"] = categoria["id"];
+    this.categoriaSelezionata = this.getCategoria();
     //update!
-    debugger;
     this._service.updateMovimento(this.movimento).subscribe(
       data => { this.movimentoUpdate.emit(this.movimento);}
     )
@@ -93,6 +93,13 @@ export class MovimentoComponent implements OnInit {
     }
     this.tagService.deleteTag(this.movimento["id"], tag_value).subscribe(
       data => {}
+    )
+  }
+
+  changeSottocategoria(value:any) {
+    this.movimento.sottocategoria_id = value;
+    this._service.updateMovimento(this.movimento).subscribe(
+      data => { this.movimentoUpdate.emit(this.movimento);}
     )
   }
 

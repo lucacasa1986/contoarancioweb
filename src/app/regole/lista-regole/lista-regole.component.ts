@@ -26,7 +26,7 @@ export class ListaRegoleComponent implements OnInit {
   }
 
   resetRegola() {
-    this.currentRegola = new Regola(null,null,'');
+    this.currentRegola = new Regola(null,null,null,'');
     this.currentRegola.addCondizione(new Condizione());
     this.selectedRegola.emit(this.currentRegola);
   }
