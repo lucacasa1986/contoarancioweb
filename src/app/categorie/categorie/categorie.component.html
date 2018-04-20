@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-link btn-lg" 
+          *ngFor="let categoria of categorie" 
+          (click)="selectCategory(categoria)"
+          placement="top" [ngbTooltip]="categoria.descrizione">
+              <span [class]="categoria.icon_class"  [ngStyle]="{ 'color': categoria.colore }"></span>
+          </button>
+      </div>
+  </div>
+
+  <div *ngIf="categoriaSelezionata">
+    <h4>{{categoriaSelezionata.descrizione}}</h4>
+      
+    <div  class="row">
+      <div class="col-3" *ngFor="let sottocategoria of categoriaSelezionata.sottocategorie">
+        <div class="card">
+          <div class="card-body">
+            <input type="text" [ngModel]="sottocategoria.descrizione" [ngModelOptions]="{updateOn: 'blur'}" (ngModelChange)="update($event,sottocategoria)" class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="addSottocategoria()">Nuova sottocategoria</button>
+  </div>
+  
+  
+</div>

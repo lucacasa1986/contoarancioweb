@@ -91,8 +91,8 @@ export class MovimentoServiceService {
     return this.http.get("/api/categories");
   }
 
-  updateCategory(category:Object) {
-    return this.http.post("/api/categories", category);
+  updateSubCategory(category:SottoCategoria) {
+    return this.http.post("/api/subcategories", category);
   }
 
   updateMovimento(movimento:Movimento) {

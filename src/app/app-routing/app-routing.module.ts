@@ -9,6 +9,7 @@ import { SignupComponent } from '../login/signup/signup.component';
 import { RegoleComponent } from '../regole/regole/regole.component';
 import { ContoContainerComponent } from '../conti/conto-container/conto-container.component';
 import { UploaderComponent } from '../movimenti/uploader/uploader.component';
+import { CategorieComponent } from '../categorie/categorie/categorie.component';
 
 const routes: Routes = [
   {
@@ -24,7 +25,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'movimenti', pathMatch: 'full' },
       { path: 'regole', component: RegoleComponent },
       { path: 'movimenti', component: ContoComponent },
-      { path: 'upload', component: UploaderComponent}
+      { path: 'upload', component: UploaderComponent},
+      { path: 'categorie', component: CategorieComponent}
     ]
   },
   {

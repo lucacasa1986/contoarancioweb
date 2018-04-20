@@ -35,6 +35,7 @@ import { RegolaComponent } from './regole/regola/regola.component';
 import { RegoleService } from './regole.service';
 import { RegolaDetailComponent } from './regole/regola-detail/regola-detail.component';
 import { ContoContainerComponent } from './conti/conto-container/conto-container.component';
+import { CategorieComponent } from './categorie/categorie/categorie.component';
 
 registerLocaleData(localeIt, 'it');
 
@@ -66,7 +67,8 @@ export function jwtOptionsFactory(tokenService) {
     ListaRegoleComponent,
     RegolaComponent,
     RegolaDetailComponent,
-    ContoContainerComponent
+    ContoContainerComponent,
+    CategorieComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, NgbModule.forRoot(), TagInputModule, BrowserAnimationsModule, ReactiveFormsModule, AppRoutingModule,
