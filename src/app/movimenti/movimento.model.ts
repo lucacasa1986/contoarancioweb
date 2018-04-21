@@ -44,7 +44,9 @@ export class Categoria {
          public colore:string, 
          public icon_class:string,
           public tipo:string,
-        public sottocategorie:SottoCategoria[]) {}
+        public sottocategorie:SottoCategoria[]) {
+            this.sottocategorie.unshift(new SottoCategoria(null, this.id, "Altre "+this.descrizione));
+        }
 
     
 

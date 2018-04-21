@@ -1,4 +1,4 @@
-import { Component, AfterContentInit, Input, SimpleChanges, OnChanges, AfterContentChecked, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, AfterContentInit, Input, SimpleChanges, OnChanges, AfterContentChecked, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Movimento, Categoria } from '../movimento.model';
 import { Chart } from 'chart.js';
 
@@ -12,6 +12,7 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
   @Input() title:string;
   @Input() public movimenti:Movimento[];
   @Input() public categorie:Categoria[];
+  @Output() detailSelected:EventEmitter<Categoria> = new EventEmitter<Categoria>();
   @ViewChild('theCanvas') canvas: ElementRef;
   chart:Chart;
   private stateDetail:boolean = false; //detail
@@ -30,12 +31,24 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
     
             var label = chartData.labels[idx];
             var value = chartData.datasets[0].data[idx];
-            this.updateChartPerCategoria(label);
+            let categoriaSelezionata:Categoria;
+            for ( let currCategoria of this.categorie){
+              if (currCategoria.descrizione === label){
+                categoriaSelezionata = currCategoria;
+                break;
+              }
+            }
+            if(categoriaSelezionata) {
+              this.categorie.forEach(element => {
+                element["selected"] = false;
+              });
+              categoriaSelezionata["selected"] = true;
+              this.detailSelected.emit(categoriaSelezionata);
+              this.updateChartPerCategoria(categoriaSelezionata);
+            }
           }
-        }else {
-          this.updateChart();
         }
-        this.stateDetail = !this.stateDetail;
+        
       }
       this.chart = new Chart(ctx, {
         type: 'doughnut',
@@ -90,17 +103,11 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
     return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
   }
 
-  updateChartPerCategoria(categoria:string) {
+  updateChartPerCategoria(categoriaSelezionata:Categoria) {
+    this.stateDetail = true;
     this.chart.data.labels = [];
     this.chart.data.datasets[0].backgroundColor = [];
     this.chart.data.datasets[0].data = [];
-    let categoriaSelezionata:Categoria;
-    for ( let currCategoria of this.categorie){
-      if (currCategoria.descrizione === categoria){
-        categoriaSelezionata = currCategoria;
-        break;
-      }
-    }
     if( categoriaSelezionata) {
       this.chart.data.labels.push("Altro");
       this.chart.data.datasets[0].backgroundColor.push(categoriaSelezionata.colore);
@@ -145,6 +152,7 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
   }
 
   updateChart() {
+    this.stateDetail = false;
     this.chart.data.labels = [];
     this.chart.data.datasets[0].backgroundColor = [];
     this.chart.data.datasets[0].data = [];

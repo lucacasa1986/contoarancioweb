@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterContentInit, AfterViewInit, Injectable, Input } from '@angular/core';
-import { Movimento } from '../movimento.model';
+import { Movimento, Categoria } from '../movimento.model';
 import { MovimentoServiceService } from '../movimento-service.service';
 import { Chart } from 'chart.js';
 import { NgbDateStruct, NgbDateAdapter, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
@@ -48,6 +48,9 @@ export class ListaMovimentiComponent implements OnInit {
   entratePage:number = 1;
 
   selectedSearch:string = "month";
+
+  allCategoriesWithMovements:boolean = true;
+  allInCategoriesWithMovements:boolean = true;
 
   constructor(private _service:MovimentoServiceService) { }
 
@@ -99,10 +102,11 @@ export class ListaMovimentiComponent implements OnInit {
           let movimento = new Movimento(d);
 
           this.movimenti.push(movimento);
+          /*
           let category = this.getCategoryById(movimento.categoria_id);
           if ( category ) {
             category["selected"] = true;
-          }
+          }*/
           if ( movimento.amount > 0 )
           {
             this.entrate.push(movimento);
@@ -168,8 +172,33 @@ export class ListaMovimentiComponent implements OnInit {
     return categoria;
   }
 
-  toggleCategory(categoria:{}) {
-    categoria["selected"] = !categoria["selected"];
+  toggleCategory(categoria:Categoria, append = true ) {
+    if (!append ){
+      this.categorie.forEach(element => {
+        element["selected"] = false;
+      });
+      categoria["selected"]= true
+    }else {
+      categoria["selected"] = !categoria["selected"];
+    }
+    if( categoria.tipo === 'OUT') {
+      this.allCategoriesWithMovements = false;
+    }else {
+      this.allInCategoriesWithMovements = false;
+    }
+    this.applyCategoryFilter();
+  }
+
+  toggleAllCategories(tipo:string = 'OUT') {
+    this.categorie.forEach(element => {
+      if (element.tipo === tipo)
+        element["selected"] = false;
+    });
+    if( tipo === 'OUT')
+      this.allCategoriesWithMovements = true;
+    else {
+      this.allInCategoriesWithMovements = true;
+    }
     this.applyCategoryFilter();
   }
 

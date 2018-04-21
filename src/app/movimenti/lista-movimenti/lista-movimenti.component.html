@@ -65,12 +65,13 @@
         </ul>
         <div class="row justify-content-center">
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary btn-sm" (click)="toggleAllCategories()">Tutte</button>
                 <button type="button" class="btn btn-link" 
                 [ngClass]="{ 'active': categoria.selected }" 
                 *ngFor="let categoria of categorie | categoryFilter:'OUT':movimenti" 
                 (click)="toggleCategory(categoria)"
                 placement="top" [ngbTooltip]="categoria.descrizione">
-                    <span [class]="categoria.icon_class"  [ngStyle]="{ 'color': categoria.selected ? categoria.colore : 'darkgrey' }"></span>
+                    <span [class]="categoria.icon_class"  [ngStyle]="{ 'color': (!allCategoriesWithMovements && categoria.selected) ? categoria.colore : 'darkgrey' }"></span>
                 </button>
             </div>
         </div>
@@ -84,7 +85,8 @@
                             </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie">
+                            <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie"
+                            (detailSelected)="allCategoriesWithMovements = false">
 
                             </app-grafico>
                         </div>
@@ -135,18 +137,20 @@
         </ul>
         <div class="row justify-content-center">
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="toggleAllCategories('IN')">Tutte</button>
                 <button type="button" class="btn btn-link" 
                 [ngClass]="{ 'active': categoria.selected }" 
                 *ngFor="let categoria of categorie | categoryFilter:'IN':movimenti" 
                 (click)="toggleCategory(categoria)"
                 placement="top" [ngbTooltip]="categoria.descrizione">
-                    <span [class]="categoria.icon_class"  [ngStyle]="{ 'color': categoria.selected ? categoria.colore : 'darkgrey' }"></span>
+                    <span [class]="categoria.icon_class"  [ngStyle]="{ 'color': (!allInCategoriesWithMovements && categoria.selected) ? categoria.colore : 'darkgrey' }"></span>
                 </button>
             </div>
         </div>
         <div class="row" *ngIf="selectedInTab==='GRAPHS'">
             <div class="col">
-                <app-grafico [movimenti]="entrate" [title]="'Entrate'" [categorie]="categorie">
+                <app-grafico [movimenti]="entrate" [title]="'Entrate'" [categorie]="categorie"
+                (detailSelected)="allInCategoriesWithMovements = false">
 
                 </app-grafico>
             </div>
