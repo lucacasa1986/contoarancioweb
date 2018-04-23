@@ -18,7 +18,7 @@ export class Movimento {
         }
         this.type = json_o["type"];
         this.description = json_o["description"];
-        this.data_movimento = json_o["date"];
+        this.data_movimento = new Date(json_o["date"]);
         this.categoria_id = json_o["categoria_id"];
         this.sottocategoria_id = json_o["sottocategoria_id"];
         let id = json_o["id"];

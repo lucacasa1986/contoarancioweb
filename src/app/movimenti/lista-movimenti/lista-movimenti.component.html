@@ -92,10 +92,8 @@
                         </div>
                         <div class="carousel-item">
                             <app-grafico-categorie [title]="'Spese per categoria nel periodo selezionato'" 
-                            [categorie]="categorie | categoryFilter:'OUT':movimenti:true" 
-                            [dateFrom]="dateFrom"
-                            [dateTo]="dateTo"
-                            [contoId]="idConto">
+                            [categorie]="categorie | categoryFilter:'OUT':movimenti:true"
+                            [movimenti]="uscite">
 
                             </app-grafico-categorie>
                         </div>
