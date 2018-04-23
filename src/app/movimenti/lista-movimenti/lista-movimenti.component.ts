@@ -37,7 +37,6 @@ export class ListaMovimentiComponent implements OnInit {
   public uscite:Movimento[] = [];
   public entrate:Movimento[] = [];
   public categorie;
-  public categorieSelezionate:object[] = [];
   andamenti:{};
 
   selectedOutTab = 'GRAPHS'; //LIST
@@ -203,7 +202,7 @@ export class ListaMovimentiComponent implements OnInit {
   }
 
   applyCategoryFilter() {
-    this.categorieSelezionate = this.getSelectedCategories();
+    this.categorie = this.categorie.splice(0);
     this.uscite.length = 0;
     this.entrate.length = 0;
     if ( this.isAnyCategorySelected('OUT')) {
