@@ -92,6 +92,8 @@
                         </div>
                         <div class="carousel-item">
                             <app-grafico-categorie [title]="'Spese per categoria nel periodo selezionato'" 
+                            [dateFrom]="dateFrom"
+                            [dateTo]="dateTo"
                             [categorie]="categorie | categoryFilter:'OUT':movimenti:true"
                             [movimenti]="uscite">
 

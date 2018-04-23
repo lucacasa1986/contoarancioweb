@@ -96,17 +96,8 @@ export class GraficoCategorieComponent implements OnChanges, AfterViewInit {
       this.chart.update();
       return;
     }
-    let minDate:Date;
-    let maxDate:Date;
-    this.movimenti.forEach(movimento=>{
-      if( !minDate || movimento.data_movimento.getTime() < minDate.getTime() ){
-        minDate = movimento.data_movimento;
-      }
-
-      if(!maxDate || movimento.data_movimento.getTime() > maxDate.getTime()) {
-        maxDate = movimento.data_movimento;
-      }
-    });
+    let minDate = this.dateFrom;
+    let maxDate = this.dateTo;
     //quanti mesi
     let minMonth = minDate.getMonth();
     let minYear = minDate.getFullYear();
@@ -165,8 +156,6 @@ export class GraficoCategorieComponent implements OnChanges, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges) {
     // changes.prop contains the old and the new value...
-    console.log('changes =');
-    console.log(changes);
     if ( this.chart) {
       this.updateDatiGrafico();
     }
