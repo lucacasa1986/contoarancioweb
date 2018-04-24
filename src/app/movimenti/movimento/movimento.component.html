@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="col-9 pointer" (click)="isVisible = !isVisible"  >
+    <div class="col-8 pointer" (click)="isVisible = !isVisible"  >
       <span class="align-middle" style="font-weight:bold"> {{movimento.type}}</span>
     </div>
     <div class="col-1 pointer" (click)="isVisible = !isVisible">
@@ -20,6 +20,9 @@
     </div>
     <div class="col-1 pointer" (click)="isVisible = !isVisible">
       <span class="align-middle importo">{{ movimento.getAbsAmount() | currency:'EUR':'symbol'}}</span>
+    </div>
+    <div class="col-1 pointer" (click)="ignoreMovimento()">
+      <span class="align-middle fa fa-remove"></span>
     </div>
   </div>
 </a>

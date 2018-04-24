@@ -12,6 +12,7 @@
                             <select class="form-control" [(ngModel)]="fileType" name="selectFileType" id="selectFileType">
                                 <option [ngValue]="'CONTO'">Conto</option>
                                 <option [ngValue]="'CARTA'">Carta</option>
+                                <option [ngValue]="'CONTO_MPS'">Conto Monte Paschi</option>
                             </select>
                         </div>           
                         <button class="btn btn-success mb-2" (click)="uploadFileToActivity()">Carica movimenti</button>

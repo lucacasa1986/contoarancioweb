@@ -103,4 +103,11 @@ export class MovimentoComponent implements OnInit {
     )
   }
 
+  ignoreMovimento(){
+    this.movimento.ignored = true;
+    this._service.updateMovimento(this.movimento).subscribe(
+      data => { this.movimentoUpdate.emit(this.movimento);}
+    )
+  }
+
 }

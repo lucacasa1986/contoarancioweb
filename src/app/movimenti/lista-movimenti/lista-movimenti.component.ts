@@ -155,10 +155,18 @@ export class ListaMovimentiComponent implements OnInit {
   }
 
   onMovimentoUpdated (movimento:Movimento) {
-    if( movimento.amount <= 0)
-      this.uscite = this.uscite.slice(0);
-    else this.entrate = this.entrate.slice(0);
-    this.movimenti = this.movimenti.slice(0);
+    if(!movimento.ignored) {
+      if( movimento.amount <= 0)
+        this.uscite = this.uscite.slice(0);
+      else this.entrate = this.entrate.slice(0);
+      this.movimenti = this.movimenti.slice(0);
+    }
+    else {
+      this.movimenti.splice( this.movimenti.indexOf(movimento),1);
+      if( movimento.amount <= 0)
+        this.uscite.splice(this.uscite.indexOf(movimento),1);
+      else this.entrate.splice(this.entrate.indexOf(movimento),1);
+    }
   }
 
   getCategoryById(category_id:Number){

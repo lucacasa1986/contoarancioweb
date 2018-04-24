@@ -10,6 +10,7 @@ export class Movimento {
     sottocategoria_id: Number;
     tags: Tag[] = [];
     tipo:string = "OUT";
+    ignored:boolean = false;
 
     constructor( json_o: Object){
         this.amount = json_o["amount"];
