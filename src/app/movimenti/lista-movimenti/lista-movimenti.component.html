@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <button class="btn btn-success mb-2" (click)="doSearch()">Cerca</button>
+                        <button class="btn btn-success mb-2" *ngIf="selectedSearch=='custom'" (click)="doSearch()">Cerca</button>
                     </div>
                     
             </div>

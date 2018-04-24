@@ -34,7 +34,6 @@
     <div class="col">
       <label >Sotto-categoria</label>
       <select class="form-control form-control-sm" [ngModel]="movimento.sottocategoria_id" (ngModelChange)="changeSottocategoria($event)" >
-        <option [ngValue]="null">Altro</option>
         <option *ngFor="let categoria of categoriaSelezionata.sottocategorie" [ngValue]="categoria.id">{{categoria.descrizione}}</option>
       </select>
     </div>

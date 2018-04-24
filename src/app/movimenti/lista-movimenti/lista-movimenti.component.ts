@@ -73,14 +73,17 @@ export class ListaMovimentiComponent implements OnInit {
       this.dateTo = new Date();
       this.dateFrom = new Date();
       this.dateFrom.setMonth ( this.dateTo.getMonth() -1);
+      this.doSearch();
     } else if ( this.selectedSearch == '3months') {
       this.dateTo = new Date();
       this.dateFrom = new Date();
       this.dateFrom.setMonth ( this.dateTo.getMonth() -3);
+      this.doSearch();
     } else if ( this.selectedSearch == '6months') {
       this.dateTo = new Date();
       this.dateFrom = new Date();
       this.dateFrom.setMonth ( this.dateTo.getMonth() -6);
+      this.doSearch();
     }
   }
 
@@ -116,6 +119,8 @@ export class ListaMovimentiComponent implements OnInit {
         this.movimenti = this.movimenti.slice(0);
         this.uscite = this.uscite.slice(0);
         this.entrate = this.entrate.slice(0);
+        this.toggleAllCategories('IN');
+        this.toggleAllCategories('OUT');
       },
       err => console.error(err),
       () => {}
