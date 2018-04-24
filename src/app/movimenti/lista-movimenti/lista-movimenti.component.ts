@@ -211,6 +211,7 @@ export class ListaMovimentiComponent implements OnInit {
 
   applyCategoryFilter() {
     this.categorie = this.categorie.splice(0);
+    this._service.updateCategories(this.categorie);
     this.uscite.length = 0;
     this.entrate.length = 0;
     if ( this.isAnyCategorySelected('OUT')) {

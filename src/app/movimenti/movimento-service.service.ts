@@ -7,15 +7,18 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class MovimentoServiceService {
 
-  private _categories: BehaviorSubject<Categoria[]> = new BehaviorSubject([]);
+  private _categories: BehaviorSubject<Categoria[]>;
 
-  public readonly allCategories: Observable<Categoria[]> = this._categories.asObservable();
+  public readonly allCategories: Observable<Categoria[]>;
 
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) { 
+    this._categories = new BehaviorSubject([]);
+    this.allCategories = this._categories.asObservable();
+  }
 
   init() {
-    this.getAllCategories().subscribe(data => {
+    this.getCategories().subscribe(data => {
       let categories = (data as any[]).map(function(element){
         let id = element["id"];
         let descrizione = element["descrizione"];
@@ -36,6 +39,10 @@ export class MovimentoServiceService {
       
     });
 
+  }
+
+  updateCategories(categorie:Categoria[]) {
+    this._categories.next(categorie);
   }
 
   getConti() {
@@ -87,7 +94,7 @@ export class MovimentoServiceService {
     });
   }
 
-  getAllCategories() {
+  getCategories() {
     return this.http.get("/api/categories");
   }
 
