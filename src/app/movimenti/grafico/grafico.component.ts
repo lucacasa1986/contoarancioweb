@@ -43,8 +43,8 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
                 element["selected"] = false;
               });
               categoriaSelezionata["selected"] = true;
-              this.detailSelected.emit(categoriaSelezionata);
               this.updateChartPerCategoria(categoriaSelezionata);
+              this.detailSelected.emit(categoriaSelezionata);
             }
           }
         }
@@ -184,7 +184,16 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
     // changes.prop contains the old and the new value...
     
     if (changes["movimenti"] && this.chart) {
-      this.updateChart();
+      let categorieSelezionate = this.categorie.filter(categoria => {
+        return categoria.selected;
+      });
+
+      if (categorieSelezionate.length === 1){
+        this.updateChartPerCategoria(categorieSelezionate[0]);
+      }else {
+        this.updateChart();
+      }
+      
     }
 
   }

@@ -85,8 +85,8 @@
                             </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie"
-                            (detailSelected)="allCategoriesWithMovements = false">
+                            <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie | categoryFilter:'OUT'"
+                            (detailSelected)="toggleCategory($event,false)">
 
                             </app-grafico>
                         </div>
