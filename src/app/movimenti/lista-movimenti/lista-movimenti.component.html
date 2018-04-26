@@ -54,7 +54,7 @@
                 <a class="nav-link" [ngClass]="{'active': selectedOutTab==='LIST'}" tabindex  (click)="selectedOutTab='LIST'">Elenco</a>
             </li>
         </ul>
-        <div class="justify-content-center">
+        <div class="d-flex justify-content-center">
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-primary btn-sm" (click)="toggleAllCategories()">Tutte</button>
                 <button type="button" class="btn btn-link" 
@@ -116,7 +116,7 @@
                 <a class="nav-link" [ngClass]="{'active': selectedInTab==='LIST'}" tabindex  (click)="selectedInTab='LIST'">Elenco</a>
             </li>
         </ul>
-        <div class="row justify-content-center">
+        <div class="d-flex justify-content-center">
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
                     <button type="button" class="btn btn-primary btn-sm" (click)="toggleAllCategories('IN')">Tutte</button>
                 <button type="button" class="btn btn-link" 
