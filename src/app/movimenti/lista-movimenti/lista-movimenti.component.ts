@@ -46,7 +46,21 @@ export class ListaMovimentiComponent implements OnInit {
   uscitePage:number = 1;
   entratePage:number = 1;
 
-  selectedSearch:string = "month";
+  searchOptions:Array<{value:string, display:string}>= [{
+    value: 'month',
+    display: 'Ultimo mese'
+  },{
+    value: '3months',
+    display: 'Ultimi 3 mesi'
+  },{
+    value: '6months',
+    display: 'Ultimi 6 mesi'
+  },{
+    value: 'custom',
+    display: 'Personalizzato'
+  }];
+
+  selectedSearch:{value:string, display:string} = this.searchOptions[0];
 
   allCategoriesWithMovements:boolean = true;
   allInCategoriesWithMovements:boolean = true;
@@ -68,18 +82,19 @@ export class ListaMovimentiComponent implements OnInit {
     this.getAndamento();
   }
 
-  changePeriod(period:string) {
-     if ( period == 'month') {
+  changePeriod(period:{value:string, display:string}) {
+    this.selectedSearch = period;
+     if ( period.value == 'month') {
       this.dateTo = new Date();
       this.dateFrom = new Date();
       this.dateFrom.setMonth ( this.dateTo.getMonth() -1);
       this.doSearch();
-    } else if ( this.selectedSearch == '3months') {
+    } else if ( period.value == '3months') {
       this.dateTo = new Date();
       this.dateFrom = new Date();
       this.dateFrom.setMonth ( this.dateTo.getMonth() -3);
       this.doSearch();
-    } else if ( this.selectedSearch == '6months') {
+    } else if ( period.value == '6months') {
       this.dateTo = new Date();
       this.dateFrom = new Date();
       this.dateFrom.setMonth ( this.dateTo.getMonth() -6);

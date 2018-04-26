@@ -1,47 +1,41 @@
 <form>
     <div class="form-row">
-            <div class="col">
+            <div class="col-6 col-md-3">
                 <div class="input-group">
                     <input class="form-control" placeholder="yyyy-mm-dd"
-                    name="dfrom" [(ngModel)]="dateFrom" ngbDatepicker #dFrom="ngbDatepicker" [disabled]="selectedSearch != 'custom'">
+                    name="dfrom" [(ngModel)]="dateFrom" ngbDatepicker #dFrom="ngbDatepicker" [disabled]="selectedSearch.value != 'custom'">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" (click)="dFrom.toggle()" type="button" [disabled]="selectedSearch != 'custom'">
+                        <button class="btn btn-outline-secondary" (click)="dFrom.toggle()" type="button" [disabled]="selectedSearch.value != 'custom'">
                                 <span class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-6 col-md-3">
                 <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd" [disabled]="selectedSearch != 'custom'"
+                    <input class="form-control" placeholder="yyyy-mm-dd" [disabled]="selectedSearch.value != 'custom'"
                         name="dto" [(ngModel)]="dateTo" ngbDatepicker #dTo="ngbDatepicker">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" (click)="dTo.toggle()" type="button" [disabled]="selectedSearch != 'custom'">
+                        <button class="btn btn-outline-secondary" (click)="dTo.toggle()" type="button" [disabled]="selectedSearch.value != 'custom'">
                             <span class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
                         </button>
                     </div>
                 </div> 
             </div>
-            <div class="col">
-                <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="selectedSearch" (ngModelChange)="changePeriod($event)">
-                    <label ngbButtonLabel class="btn-primary">
-                        <input ngbButton type="radio" value="month"> Ultimo mese
-                    </label>
-                    <label ngbButtonLabel class="btn-primary">
-                        <input ngbButton type="radio" value="3months"> Ultimi 3 mesi
-                    </label>
-                    <label ngbButtonLabel class="btn-primary">
-                        <input ngbButton type="radio" value="6months"> Ultimi 6 mesi
-                    </label>
-                    <label ngbButtonLabel class="btn-primary">
-                        <input ngbButton type="radio" value="custom"> Personalizzato
-                    </label>
+            <div class="col-6 col-md-3">
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-primary" id="searchPeriodDD" ngbDropdownToggle>
+                      {{selectedSearch.display}}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="searchPeriodDD">
+                        <button class="dropdown-item" *ngFor="let option of searchOptions" (click)="changePeriod(option)">{{option.display}}</button>
+                    </div>
                 </div>
+                <div class="d-inline-block">
+                        <button class="btn btn-success" *ngIf="selectedSearch.value=='custom'" (click)="doSearch()">Cerca</button>
+                </div>
+                
             </div>
-            <div class="col">
-                <button class="btn btn-success mb-2" *ngIf="selectedSearch=='custom'" (click)="doSearch()">Cerca</button>
-            </div>
-            
     </div>
 </form>
 
