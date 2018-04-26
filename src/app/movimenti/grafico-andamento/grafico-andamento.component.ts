@@ -34,6 +34,9 @@ export class GraficoAndamentoComponent implements OnChanges, AfterViewInit {
           ]
         },
         options: {
+          legend: {
+            display: false
+          },
           scales: {
             xAxes: [{
               type: 'time',

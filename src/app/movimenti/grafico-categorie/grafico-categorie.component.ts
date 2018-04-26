@@ -32,6 +32,9 @@ export class GraficoCategorieComponent implements OnChanges, AfterViewInit {
           datasets: []
         },
         options: {
+          legend: {
+            display: false
+          },
           scales: {
             xAxes: [{
               stacked: true,

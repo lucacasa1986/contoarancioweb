@@ -63,9 +63,11 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
           ]
         },
         options: {
+          legend: {
+            display: false
+         },
           title: {
             display: false,
-            responsive: true,
             text: this.title
           }
         }
