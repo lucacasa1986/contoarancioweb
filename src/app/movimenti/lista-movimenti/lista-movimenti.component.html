@@ -1,53 +1,50 @@
-<div class="row">
-    <div class="col">
-        <form>
-            <div class="form-row">
-                    <div class="col">
-                        <div class="input-group">
-                            <input class="form-control" placeholder="yyyy-mm-dd"
-                            name="dfrom" [(ngModel)]="dateFrom" ngbDatepicker #dFrom="ngbDatepicker" [disabled]="selectedSearch != 'custom'">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" (click)="dFrom.toggle()" type="button" [disabled]="selectedSearch != 'custom'">
-                                        <span class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
-                                </button>
-                            </div>
-                        </div>
+<form>
+    <div class="form-row">
+            <div class="col">
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                    name="dfrom" [(ngModel)]="dateFrom" ngbDatepicker #dFrom="ngbDatepicker" [disabled]="selectedSearch != 'custom'">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dFrom.toggle()" type="button" [disabled]="selectedSearch != 'custom'">
+                                <span class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
+                        </button>
                     </div>
-                    <div class="col">
-                        <div class="input-group">
-                            <input class="form-control" placeholder="yyyy-mm-dd" [disabled]="selectedSearch != 'custom'"
-                                name="dto" [(ngModel)]="dateTo" ngbDatepicker #dTo="ngbDatepicker">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" (click)="dTo.toggle()" type="button" [disabled]="selectedSearch != 'custom'">
-                                    <span class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
-                                </button>
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="col">
-                        <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="selectedSearch" (ngModelChange)="changePeriod($event)">
-                            <label ngbButtonLabel class="btn-primary">
-                                <input ngbButton type="radio" value="month"> Ultimo mese
-                            </label>
-                            <label ngbButtonLabel class="btn-primary">
-                                <input ngbButton type="radio" value="3months"> Ultimi 3 mesi
-                            </label>
-                            <label ngbButtonLabel class="btn-primary">
-                                <input ngbButton type="radio" value="6months"> Ultimi 6 mesi
-                            </label>
-                            <label ngbButtonLabel class="btn-primary">
-                                <input ngbButton type="radio" value="custom"> Personalizzato
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-success mb-2" *ngIf="selectedSearch=='custom'" (click)="doSearch()">Cerca</button>
-                    </div>
-                    
+                </div>
             </div>
-        </form>
+            <div class="col">
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" [disabled]="selectedSearch != 'custom'"
+                        name="dto" [(ngModel)]="dateTo" ngbDatepicker #dTo="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dTo.toggle()" type="button" [disabled]="selectedSearch != 'custom'">
+                            <span class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
+                        </button>
+                    </div>
+                </div> 
+            </div>
+            <div class="col">
+                <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="selectedSearch" (ngModelChange)="changePeriod($event)">
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="month"> Ultimo mese
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="3months"> Ultimi 3 mesi
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="6months"> Ultimi 6 mesi
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                        <input ngbButton type="radio" value="custom"> Personalizzato
+                    </label>
+                </div>
+            </div>
+            <div class="col">
+                <button class="btn btn-success mb-2" *ngIf="selectedSearch=='custom'" (click)="doSearch()">Cerca</button>
+            </div>
+            
     </div>
-</div>
+</form>
+
 <hr>
 <ngb-tabset type="pills">
     <ngb-tab title="Spese" id="OUT">
@@ -63,7 +60,7 @@
                 <a class="nav-link" [ngClass]="{'active': selectedOutTab==='LIST'}" tabindex  (click)="selectedOutTab='LIST'">Elenco</a>
             </li>
         </ul>
-        <div class="row justify-content-center">
+        <div class="justify-content-center">
             <div class="btn-group mb-2 mr-sm-2" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-primary btn-sm" (click)="toggleAllCategories()">Tutte</button>
                 <button type="button" class="btn btn-link" 
@@ -76,55 +73,45 @@
             </div>
         </div>
         
-        <div class="row" *ngIf="selectedOutTab==='GRAPHS'">
-            <div class="col">
-                <div id="carouselGraphs" class="carousel slide" data-ride="carousel" data-interval="false">
-                        <ol class="carousel-indicators">
-                                <li data-target="#carouselGraphs" data-slide-to="0" class="active"></li>
-                                <li data-target="#carouselGraphs" data-slide-to="1"></li>
-                            </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie | categoryFilter:'OUT'"
-                            (detailSelected)="toggleCategory($event,false)">
+        <div *ngIf="selectedOutTab==='GRAPHS'">
+            <div id="carouselGraphs" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <ol class="carousel-indicators">
+                            <li data-target="#carouselGraphs" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselGraphs" data-slide-to="1"></li>
+                        </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <app-grafico [movimenti]="uscite" [title]="'Spese'" [categorie]="categorie | categoryFilter:'OUT'"
+                        (detailSelected)="toggleCategory($event,false)">
 
-                            </app-grafico>
-                        </div>
-                        <div class="carousel-item">
-                            <app-grafico-categorie [title]="'Spese per categoria nel periodo selezionato'" 
-                            [dateFrom]="dateFrom"
-                            [dateTo]="dateTo"
-                            [categorie]="categorie | categoryFilter:'OUT':movimenti:true"
-                            [movimenti]="uscite">
+                        </app-grafico>
+                    </div>
+                    <div class="carousel-item">
+                        <app-grafico-categorie [title]="'Spese per categoria nel periodo selezionato'" 
+                        [dateFrom]="dateFrom"
+                        [dateTo]="dateTo"
+                        [categorie]="categorie | categoryFilter:'OUT':movimenti:true"
+                        [movimenti]="uscite">
 
-                            </app-grafico-categorie>
-                        </div>
+                        </app-grafico-categorie>
                     </div>
                 </div>
-                
             </div>
         </div>
         <div *ngIf="selectedOutTab==='LIST'">
-            <div class="row">
-                <div class="col">
-                    <ngb-pagination [collectionSize]="uscite.length" [(page)]="uscitePage" [boundaryLinks]="true"></ngb-pagination>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col">
-                    <app-movimento *ngFor="let movimento of uscite | slice: (uscitePage * 10) - 10 :uscitePage * 10" 
-                    [movimento]="movimento" 
-                    [categorie]="categorie" 
-                    (movimentoUpdate)="onMovimentoUpdated($event)"></app-movimento>
-                </div>
-            </div>
+            <ngb-pagination [collectionSize]="uscite.length" [(page)]="uscitePage" [boundaryLinks]="true"></ngb-pagination>
+            <ul class="list-group">
+                <app-movimento *ngFor="let movimento of uscite | slice: (uscitePage * 10) - 10 :uscitePage * 10" 
+                [movimento]="movimento" 
+                [categorie]="categorie" 
+                (movimentoUpdate)="onMovimentoUpdated($event)"></app-movimento>
+            </ul>
         </div>
       </ng-template>
     </ngb-tab>
     <ngb-tab title="Entrate" id="IN">
       <ng-template ngbTabContent>
-        <h4 class="row">
+        <h4>
             Totale entrate nel periodo: {{ getTotaleEntrate() | currency:'EUR':'symbol'}}
         </h4>
         <ul class="nav nav-pills justify-content-center" style="margin-bottom: 10px">
@@ -147,43 +134,29 @@
                 </button>
             </div>
         </div>
-        <div class="row" *ngIf="selectedInTab==='GRAPHS'">
-            <div class="col">
-                <app-grafico [movimenti]="entrate" [title]="'Entrate'" [categorie]="categorie"
-                (detailSelected)="allInCategoriesWithMovements = false">
+        <div *ngIf="selectedInTab==='GRAPHS'">
+            <app-grafico [movimenti]="entrate" [title]="'Entrate'" [categorie]="categorie"
+            (detailSelected)="allInCategoriesWithMovements = false">
 
-                </app-grafico>
-            </div>
+            </app-grafico>
         </div>
         <div *ngIf="selectedInTab==='LIST'">
-            <div class="row">
-                <div class="col">
-                    <ngb-pagination [collectionSize]="entrate.length" [(page)]="entratePage" [boundaryLinks]="true"></ngb-pagination>
-                </div>
-            </div>
+            <ngb-pagination [collectionSize]="entrate.length" [(page)]="entratePage" [boundaryLinks]="true"></ngb-pagination>
+            <ul class="list-group">
+                <app-movimento *ngFor="let movimento of entrate | slice: (entratePage * 10) - 10 :entratePage * 10" 
+                    [movimento]="movimento" 
+                    [categorie]="categorie">
+                </app-movimento>
+            </ul>
             
-            <div class="row">
-                <div class="col">
-                    <app-movimento *ngFor="let movimento of entrate | slice: (entratePage * 10) - 10 :entratePage * 10" 
-                        [movimento]="movimento" 
-                        [categorie]="categorie">
-                    </app-movimento>
-                </div>
-            </div>
         </div>
         
       </ng-template>
     </ngb-tab>
     <ngb-tab title="Andamento" id="BALANCE">
         <ng-template ngbTabContent>
-          <div class="row">
-              <div class="col">
-                <app-grafico-andamento [rilevazioni]="andamenti" [title]="'Andamento nel periodo selezionato'">
-
-                </app-grafico-andamento>
-              </div>
-          </div>
+            <app-grafico-andamento [rilevazioni]="andamenti" [title]="'Andamento nel periodo selezionato'">
+            </app-grafico-andamento>
         </ng-template>
-      </ngb-tab>
+    </ngb-tab>
 </ngb-tabset>
-<hr>

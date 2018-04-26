@@ -1,42 +1,48 @@
-<a class="list-group-item clearfix" >
-  <div class="row">
-    <div class="col-1">
-      <div ngbDropdown class="d-inline-block">
-        <button class="btn btn-outline-primary btn-sm" id="categoryDropdown" ngbDropdownToggle>
-          <span [class]="getCategoriaIcon()" [ngStyle]="{ color: getCategoriaColoreById() }" style="margin-right: 20px"  placement="top" [ngbTooltip]="getCategoriaDescription()"></span>
-        </button>
-        <div ngbDropdownMenu aria-labelledby="categoryDropdown">
-          <button class="dropdown-item pointer" *ngFor="let categoria of categorie | categoryFilter:movimento.tipo" (click)="cambiaCategoria(categoria)">
-              <span [class]="categoria.icon_class" [ngStyle]="{ color: categoria.colore }"></span> {{categoria.descrizione}}
-          </button>
+<li class="list-group-item">
+    <div class="row">
+        <div class="col-md-1 col-3 order-1">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary btn-sm" id="categoryDropdown" ngbDropdownToggle>
+              <span [class]="getCategoriaIcon()" [ngStyle]="{ color: getCategoriaColoreById() }" style="margin-right: 20px"  placement="top" [ngbTooltip]="getCategoriaDescription()"></span>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="categoryDropdown">
+              <button class="dropdown-item pointer" *ngFor="let categoria of categorie | categoryFilter:movimento.tipo" (click)="cambiaCategoria(categoria)">
+                  <span [class]="categoria.icon_class" [ngStyle]="{ color: categoria.colore }"></span> {{categoria.descrizione}}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 col-12 pointer order-3 order-md-2" (click)="isVisible = !isVisible"  >
+          <span class="align-middle" style="font-weight:bold"> {{movimento.type}}</span>
+        </div>
+        <div class="col-md-3 col-6 pointer order-md-3 order-2" (click)="isVisible = !isVisible">
+          <div class="row">
+              <div class="col-6">
+                  <span class="align-middle">{{ movimento.data_movimento | date:'shortDate':'':'it'}}</span>
+              </div>
+              <div class="col-6">
+                  <span class="align-middle importo">{{ movimento.getAbsAmount() | currency:'EUR':'symbol'}}</span>
+              </div>
+              <!--<div class="col-2">
+                  <span class="align-middle fa fa-remove" (click)="ignoreMovimento()"></span>
+              </div>-->
+              
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-8 pointer" (click)="isVisible = !isVisible"  >
-      <span class="align-middle" style="font-weight:bold"> {{movimento.type}}</span>
-    </div>
-    <div class="col-1 pointer" (click)="isVisible = !isVisible">
-      <span class="align-middle">{{ movimento.data_movimento | date:'shortDate':'':'it'}}</span>
-    </div>
-    <div class="col-1 pointer" (click)="isVisible = !isVisible">
-      <span class="align-middle importo">{{ movimento.getAbsAmount() | currency:'EUR':'symbol'}}</span>
-    </div>
-    <div class="col-1 pointer" (click)="ignoreMovimento()">
-      <span class="align-middle fa fa-remove"></span>
-    </div>
-  </div>
-</a>
-<div *ngIf="isVisible" class="p-3">
-  <div class="row">
-    <div class="col">
-      <p class="list-group-item-text">{{movimento.description}}</p>
-    </div>
-    <div class="col">
-      <label >Sotto-categoria</label>
-      <select class="form-control form-control-sm" [ngModel]="movimento.sottocategoria_id" (ngModelChange)="changeSottocategoria($event)" >
-        <option *ngFor="let categoria of categoriaSelezionata.sottocategorie" [ngValue]="categoria.id">{{categoria.descrizione}}</option>
-      </select>
-    </div>
+      <div *ngIf="isVisible" class="p-3">
+        <div class="row">
+          <div class="col">
+            <p class="list-group-item-text">{{movimento.description}}</p>
+          </div>
+          <div class="col">
+            <label >Sotto-categoria</label>
+            <select class="form-control form-control-sm" [ngModel]="movimento.sottocategoria_id" (ngModelChange)="changeSottocategoria($event)" >
+              <option *ngFor="let categoria of categoriaSelezionata.sottocategorie" [ngValue]="categoria.id">{{categoria.descrizione}}</option>
+            </select>
+          </div>
+            
+        </div>
+      </div>
       
-  </div>
-</div>
+</li>
