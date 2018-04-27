@@ -61,6 +61,7 @@ export class ListaMovimentiComponent implements OnInit {
   }];
 
   selectedSearch:{value:string, display:string} = this.searchOptions[0];
+  startingDay:number = 1;
 
   allCategoriesWithMovements:boolean = true;
   allInCategoriesWithMovements:boolean = true;
@@ -82,22 +83,32 @@ export class ListaMovimentiComponent implements OnInit {
     this.getAndamento();
   }
 
+  getDateFrom(dateTo:Date, period:number, startingDay:number = 1):Date {
+    let date =  new Date( dateTo.getTime());
+    if ( date.getDate() !== startingDay ) {
+      period = period - 1;
+    }
+    date.setMonth ( date.getMonth() - period);
+    let y = date.getFullYear();
+    let m = date.getMonth();
+    let retDate = new Date();
+    retDate.setFullYear(y,m,startingDay)
+    return retDate;
+  }
+
   changePeriod(period:{value:string, display:string}) {
     this.selectedSearch = period;
      if ( period.value == 'month') {
       this.dateTo = new Date();
-      this.dateFrom = new Date();
-      this.dateFrom.setMonth ( this.dateTo.getMonth() -1);
+      this.dateFrom = this.getDateFrom(this.dateTo, 1, this.startingDay);
       this.doSearch();
     } else if ( period.value == '3months') {
       this.dateTo = new Date();
-      this.dateFrom = new Date();
-      this.dateFrom.setMonth ( this.dateTo.getMonth() -3);
+      this.dateFrom = this.getDateFrom(this.dateTo, 3, this.startingDay);
       this.doSearch();
     } else if ( period.value == '6months') {
       this.dateTo = new Date();
-      this.dateFrom = new Date();
-      this.dateFrom.setMonth ( this.dateTo.getMonth() -6);
+      this.dateFrom = this.getDateFrom(this.dateTo, 6, this.startingDay);
       this.doSearch();
     }
   }
