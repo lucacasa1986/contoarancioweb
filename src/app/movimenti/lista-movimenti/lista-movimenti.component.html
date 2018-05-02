@@ -1,12 +1,12 @@
 <form>
     <div class="form-row">
-            <div class="col-1 col-md-1">
-                    <button type="button" class="btn btn-outline-primary" (click)="shiftPeriod(-1)"> <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span></button>
-            </div>
-            <div class="col-5 col-md-3">
+            <div class="col-6 col-md-3">
                 
                 <div class="input-group">
+                    <div class="input-group-prepend" *ngIf="selectedSearch.value != 'custom'">
+                            <button type="button" class="btn btn-outline-primary" (click)="shiftPeriod(-1)"> <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span></button>
+                    </div>
                     <input class="form-control" placeholder="yyyy-mm-dd"
                     name="dfrom" [(ngModel)]="dateFrom" ngbDatepicker #dFrom="ngbDatepicker" [disabled]="selectedSearch.value != 'custom'">
                     <div class="input-group-append">
@@ -16,21 +16,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-5 col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="input-group">
+                           
                     <input class="form-control" placeholder="yyyy-mm-dd" [disabled]="selectedSearch.value != 'custom'"
                         name="dto" [(ngModel)]="dateTo" ngbDatepicker #dTo="ngbDatepicker">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" (click)="dTo.toggle()" type="button" [disabled]="selectedSearch.value != 'custom'">
                             <span class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
                         </button>
+                        <button *ngIf="selectedSearch.value != 'custom'" type="button" class="btn btn-outline-primary" (click)="shiftPeriod(+1)"> <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span></button>
                     </div>
                 </div> 
             </div>
-            <div class="col-1 col-md-1">
-                    <button type="button" class="btn btn-outline-primary" (click)="shiftPeriod(1)"> <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Previous</span></button>
-            </div>
+
             <div class="col-6 col-md-3">
                 <div ngbDropdown class="d-inline-block">
                     <button class="btn btn-outline-primary" id="searchPeriodDD" ngbDropdownToggle>
