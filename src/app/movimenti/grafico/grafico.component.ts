@@ -127,7 +127,7 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
                 if ( index > -1 )
                 {
                   let current_amount = this.chart.data.datasets[0].data[index];
-                  let new_amount = current_amount + m.getAbsAmount();
+                  let new_amount = current_amount + m.absAmount;
                   this.chart.data.datasets[0].data[index] = new_amount;
                 }else {
                   let new_size = this.chart.data.labels.push(c.descrizione);
@@ -135,14 +135,14 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
                   let col_modifier = 40 * ( index % 2 == 0 ? -1 : 1)
                   let colore_mod = this.lightenDarkenColor(categoriaSelezionata.colore, col_modifier );
                   this.chart.data.datasets[0].backgroundColor.push(colore_mod);
-                  this.chart.data.datasets[0].data.push(m.getAbsAmount());
+                  this.chart.data.datasets[0].data.push(m.absAmount);
                 }
               }
             }
           }else {
             // non sottocategorizzato
             let current_amount = this.chart.data.datasets[0].data[0];
-            let new_amount = current_amount + m.getAbsAmount();
+            let new_amount = current_amount + m.absAmount;
             this.chart.data.datasets[0].data[0] = new_amount;
           }
           
@@ -168,13 +168,13 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
           if ( index > -1 )
           {
             let current_amount = this.chart.data.datasets[0].data[index];
-            let new_amount = current_amount + m.getAbsAmount();
+            let new_amount = current_amount + m.absAmount;
             this.chart.data.datasets[0].data[index] = new_amount;
           }else {
             let new_size = this.chart.data.labels.push(c['descrizione']);
             let index = new_size - 1;
             this.chart.data.datasets[0].backgroundColor.push(c['colore']);
-            this.chart.data.datasets[0].data.push(m.getAbsAmount());
+            this.chart.data.datasets[0].data.push(m.absAmount);
           }
         }
       }

@@ -21,7 +21,7 @@
                   <span class="align-middle">{{ movimento.data_movimento | date:'shortDate':'':'it'}}</span>
               </div>
               <div class="col-6">
-                  <span class="align-middle importo">{{ movimento.getAbsAmount() | currency:'EUR':'symbol'}}</span>
+                  <span class="align-middle importo">{{ movimento.absAmount | currency:'EUR':'symbol'}}</span>
               </div>
               <!--<div class="col-2">
                   <span class="align-middle fa fa-remove" (click)="ignoreMovimento()"></span>
@@ -43,6 +43,42 @@
           </div>
             
         </div>
+        <div class="row">
+          <div class="col">
+            <form [formGroup]="movimentoSplitForm" (ngSubmit)="onSubmit()">
+              <div formArrayName="otherCategories">
+                <h4>Aggiungi categoria</h4>
+                <div *ngFor="let newCategory of otherCategories.controls; let i=index" [formGroupName]="i" class="card" style="margin-bottom: 10px">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                              <label >Categoria</label>
+                              <select class="form-control form-control-sm" formControlName="category">
+                                <option *ngFor="let category of categorie" [ngValue]="category">{{category.descrizione}}</option>
+                              </select>
+                            </div>
+                            <div class="form-group col-4" *ngIf="newCategory.controls.category.value">
+                              <label >Sotto-categoria</label>
+                              <select class="form-control form-control-sm" formControlName="subCategory">
+                                <option *ngFor="let subCategory of newCategory.controls.category.value.sottocategorie" [ngValue]="subCategory">{{subCategory.descrizione}}</option>
+                              </select>
+                            </div>
+                            
+                            <div class="form-group col-4">
+                              <label >Importo:</label>
+                              <input class="form-control form-control-sm" formControlName="amount" type="number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button (click)="addNewCategory()" type="button" class="btn btn-primary">Aggiungi categoria</button>
+                <button type="submit"
+                  [disabled]="movimentoSplitForm.pristine || !movimentoSplitForm.valid" class="btn btn-success">Salva</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        
       </div>
       
 </li>

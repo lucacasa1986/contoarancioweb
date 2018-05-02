@@ -175,13 +175,13 @@ export class ListaMovimentiComponent implements OnInit {
 
   getTotaleEntrate() {
     return this.entrate.reduce<number>(function(a,b){
-      return a + b.getAbsAmount();
+      return a + b.absAmount;
     }, 0);
   }
 
   getTotaleUscite() {
     return this.uscite.reduce<number>(function(a,b){
-      return a + b.getAbsAmount();
+      return a + b.absAmount;
     }, 0);
   }
 

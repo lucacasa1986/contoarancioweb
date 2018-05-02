@@ -32,7 +32,7 @@ export class Movimento {
         });
     }
 
-    getAbsAmount() {
+    get absAmount() {
         return Math.abs(this.amount);
     }
 }

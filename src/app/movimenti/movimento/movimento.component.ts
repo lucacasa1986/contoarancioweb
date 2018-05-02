@@ -7,7 +7,23 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, FormArray, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
+export function amountSumValidator(amount: number): ValidatorFn {
+  return (control: FormArray): {[key: string]: any} => {
+    let totatAmount = 0;
+    for ( let category of control.controls) {
+      let categoryFb = category as FormGroup;
+      totatAmount += categoryFb.controls.amount.value;
+    }
+    if ( totatAmount === amount ){
+      return null;
+    }else {
+      return {'wrongAmount': {value: totatAmount}}
+    }
+    
+  };
+}
 
 @Component({
   selector: 'app-movimento',
@@ -23,11 +39,56 @@ export class MovimentoComponent implements OnInit {
   subcategories: Tag[];
   private categoriaSelezionata:Categoria;
 
-  constructor(private _service:MovimentoServiceService, private tagService:TagService) { }
+  movimentoSplitForm:FormGroup;
+
+  constructor(private _service:MovimentoServiceService, private tagService:TagService, private fb: FormBuilder) { 
+  }
 
   ngOnInit() {
     this.subcategories = this.tagService.allTags;
     this.categoriaSelezionata = this.getCategoria();
+    this.createForm();
+  }
+
+  createForm() {
+    this.movimentoSplitForm = this.fb.group({
+      otherCategories: this.fb.array([this.fb.group({ 
+        category: [this.categoriaSelezionata, [Validators.required]],
+        subCategory: [this.getSottoCategoria()],
+        amount: [this.movimento.absAmount, [Validators.required, Validators.min(0.01), Validators.max(this.movimento.absAmount)]]
+      })], amountSumValidator(this.movimento.absAmount)
+    )})
+  }
+
+  buildItems() {
+    let totalAmount = 0;
+    for ( let category of this.otherCategories.controls){
+      let categoryFb = category as FormGroup;
+      totalAmount = totalAmount + categoryFb.controls.amount.value;
+    }
+    let remainingAmount = this.movimento.absAmount - totalAmount;
+    return this.fb.group({ 
+      category: [null, [Validators.required]],
+      subCategory: [null],
+      amount: [remainingAmount > 0 ? remainingAmount : 0, [Validators.required, Validators.min(0.01)]]
+    });
+  }
+
+  get otherCategories(): FormArray {
+    return this.movimentoSplitForm.get('otherCategories') as FormArray;
+  }
+
+  addNewCategory() {
+    this.otherCategories.push(this.buildItems());
+  }
+
+  onSubmit() {
+    if( this.movimentoSplitForm.valid) {
+      this._service.splitMovimento(this.movimento, 1, this.otherCategories.value).subscribe(data => {
+        console.log(data);
+      })
+    }
+    
   }
 
   cambiaCategoria(categoria:{})
@@ -47,6 +108,20 @@ export class MovimentoComponent implements OnInit {
       {
         return categoria;
       }
+    }
+    return null;
+  }
+
+  getSottoCategoria() {
+    if ( this.categoriaSelezionata) {
+      for(let categoria of this.categoriaSelezionata.sottocategorie)
+      {
+        if (categoria['id'] == this.movimento.sottocategoria_id)
+        {
+          return categoria;
+        }
+      }
+      return null;
     }
     return null;
   }

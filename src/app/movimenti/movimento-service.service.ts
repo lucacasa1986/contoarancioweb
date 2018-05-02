@@ -106,6 +106,36 @@ export class MovimentoServiceService {
     return this.http.put("/api/movimento", movimento);
   }
 
+  splitMovimento(movimento:Movimento, conto_id:number, others: Array<{category:Categoria, subCategory:SottoCategoria, amount:number}>) {
+    let origCategory = others[0];
+    movimento.categoria_id = origCategory.category.id;
+    if ( origCategory.subCategory) {
+      movimento.sottocategoria_id = origCategory.subCategory.id;
+    } else {
+      movimento.sottocategoria_id = null;
+    }
+    if( movimento.tipo === 'OUT') {
+      movimento.amount = origCategory.amount * -1;
+
+    }else {
+      movimento.amount = origCategory.amount;
+    }
+    others.shift();
+    if ( movimento.tipo === 'OUT') {
+      for( let other of others ){
+        other.amount = other.amount * -1;
+      }
+    }
+    
+
+    let data = {
+      movimento: movimento,
+      conto_id: conto_id,
+      others: others
+    }
+    return this.http.post("/api/movimento", data)
+  }
+
   uploadFile(idConto:number,file:File, type:string)
   {
     const endpoint = '/api/parse/'+idConto;
