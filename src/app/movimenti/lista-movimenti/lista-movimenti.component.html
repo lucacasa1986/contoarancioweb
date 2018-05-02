@@ -1,6 +1,11 @@
 <form>
     <div class="form-row">
-            <div class="col-6 col-md-3">
+            <div class="col-1 col-md-1">
+                    <button type="button" class="btn btn-outline-primary" (click)="shiftPeriod(-1)"> <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span></button>
+            </div>
+            <div class="col-5 col-md-3">
+                
                 <div class="input-group">
                     <input class="form-control" placeholder="yyyy-mm-dd"
                     name="dfrom" [(ngModel)]="dateFrom" ngbDatepicker #dFrom="ngbDatepicker" [disabled]="selectedSearch.value != 'custom'">
@@ -11,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-5 col-md-3">
                 <div class="input-group">
                     <input class="form-control" placeholder="yyyy-mm-dd" [disabled]="selectedSearch.value != 'custom'"
                         name="dto" [(ngModel)]="dateTo" ngbDatepicker #dTo="ngbDatepicker">
@@ -21,6 +26,10 @@
                         </button>
                     </div>
                 </div> 
+            </div>
+            <div class="col-1 col-md-1">
+                    <button type="button" class="btn btn-outline-primary" (click)="shiftPeriod(1)"> <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Previous</span></button>
             </div>
             <div class="col-6 col-md-3">
                 <div ngbDropdown class="d-inline-block">

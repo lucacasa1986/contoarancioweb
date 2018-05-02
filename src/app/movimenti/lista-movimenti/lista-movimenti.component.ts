@@ -48,13 +48,13 @@ export class ListaMovimentiComponent implements OnInit {
 
   searchOptions:Array<{value:string, display:string}>= [{
     value: 'month',
-    display: 'Ultimo mese'
+    display: '1 mese'
   },{
     value: '3months',
-    display: 'Ultimi 3 mesi'
+    display: '3 mesi'
   },{
     value: '6months',
-    display: 'Ultimi 6 mesi'
+    display: '6 mesi'
   },{
     value: 'custom',
     display: 'Personalizzato'
@@ -98,7 +98,7 @@ export class ListaMovimentiComponent implements OnInit {
 
   changePeriod(period:{value:string, display:string}) {
     this.selectedSearch = period;
-     if ( period.value == 'month') {
+    if ( period.value == 'month') {
       this.dateTo = new Date();
       this.dateFrom = this.getDateFrom(this.dateTo, 1, this.startingDay);
       this.doSearch();
@@ -109,6 +109,30 @@ export class ListaMovimentiComponent implements OnInit {
     } else if ( period.value == '6months') {
       this.dateTo = new Date();
       this.dateFrom = this.getDateFrom(this.dateTo, 6, this.startingDay);
+      this.doSearch();
+    }
+  }
+
+  shiftPeriod(direction:number) {
+    let directionMult:number = 1;
+    if ( direction < 0) {
+      directionMult = -1;
+    }
+    let period = this.selectedSearch;
+    if ( period.value == 'month') {
+      this.dateFrom = new Date(this.dateFrom.setMonth ( this.dateFrom.getMonth() + 1*directionMult));
+      let d = new Date(this.dateFrom.getFullYear(), this.dateFrom.getMonth() + 1, 0);
+      this.dateTo = d;
+      this.doSearch();
+    } else if ( period.value == '3months') {
+      this.dateFrom = new Date(this.dateFrom.setMonth ( this.dateFrom.getMonth() + 3*directionMult));
+      let d = new Date(this.dateFrom.getFullYear(), this.dateFrom.getMonth() + 3, 0);
+      this.dateTo = d;
+      this.doSearch();
+    } else if ( period.value == '6months') {
+      this.dateFrom = new Date(this.dateFrom.setMonth ( this.dateFrom.getMonth() + 6*directionMult));
+      let d = new Date(this.dateFrom.getFullYear(), this.dateFrom.getMonth() + 6, 0);
+      this.dateTo = d;
       this.doSearch();
     }
   }
