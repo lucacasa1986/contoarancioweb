@@ -50,14 +50,27 @@ export class MovimentoComponent implements OnInit {
     this.createForm();
   }
 
+  buildDefaultFormGroup(): FormGroup {
+    let firstFormGroup = this.fb.group({ 
+      category: [this.categoriaSelezionata, [Validators.required]],
+      subCategory: [this.getSottoCategoria()],
+      amount: [this.movimento.absAmount, [Validators.required, Validators.min(0.01), Validators.max(this.movimento.absAmount)]]
+    });
+    firstFormGroup.controls.category.disable();
+    firstFormGroup.controls.subCategory.disable();
+    return firstFormGroup;
+  }
+
   createForm() {
     this.movimentoSplitForm = this.fb.group({
-      otherCategories: this.fb.array([this.fb.group({ 
-        category: [this.categoriaSelezionata, [Validators.required]],
-        subCategory: [this.getSottoCategoria()],
-        amount: [this.movimento.absAmount, [Validators.required, Validators.min(0.01), Validators.max(this.movimento.absAmount)]]
-      })], amountSumValidator(this.movimento.absAmount)
+      otherCategories: this.fb.array([this.buildDefaultFormGroup()], amountSumValidator(this.movimento.absAmount)
     )})
+  }
+
+  resetForm() {
+    debugger;
+    const defaultFormArray = this.fb.array([this.buildDefaultFormGroup()], amountSumValidator(this.movimento.absAmount));
+    this.movimentoSplitForm.setControl('otherCategories', defaultFormArray);
   }
 
   buildItems() {
@@ -94,10 +107,15 @@ export class MovimentoComponent implements OnInit {
   cambiaCategoria(categoria:{})
   {
     this.movimento["categoria_id"] = categoria["id"];
+    this.movimento["sottocategoria_id"] = null;
     this.categoriaSelezionata = this.getCategoria();
+    
     //update!
     this._service.updateMovimento(this.movimento).subscribe(
-      data => { this.movimentoUpdate.emit(this.movimento);}
+      data => { 
+        this.movimentoUpdate.emit(this.movimento);
+        this.resetForm();
+      }
     )
   }
 
@@ -173,8 +191,12 @@ export class MovimentoComponent implements OnInit {
 
   changeSottocategoria(value:any) {
     this.movimento.sottocategoria_id = value;
+    
     this._service.updateMovimento(this.movimento).subscribe(
-      data => { this.movimentoUpdate.emit(this.movimento);}
+      data => {
+         this.movimentoUpdate.emit(this.movimento);
+         this.resetForm();
+        }
     )
   }
 

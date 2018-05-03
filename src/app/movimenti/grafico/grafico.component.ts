@@ -132,7 +132,7 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
                 }else {
                   let new_size = this.chart.data.labels.push(c.descrizione);
                   let index = new_size - 1;
-                  let col_modifier = 40 * ( index % 2 == 0 ? -1 : 1)
+                  let col_modifier = 20 * ( index % 2 == 0 ? -1 : 1)
                   let colore_mod = this.lightenDarkenColor(categoriaSelezionata.colore, col_modifier );
                   this.chart.data.datasets[0].backgroundColor.push(colore_mod);
                   this.chart.data.datasets[0].data.push(m.absAmount);
