@@ -48,26 +48,22 @@
             <form [formGroup]="movimentoSplitForm" (ngSubmit)="onSubmit()">
               <div formArrayName="otherCategories">
                 <h4>Aggiungi categoria</h4>
-                <div *ngFor="let newCategory of otherCategories.controls; let i=index" [formGroupName]="i" class="card" style="margin-bottom: 10px">
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="form-group col-4">
-                              <label >Categoria</label>
-                              <select class="form-control form-control-sm" formControlName="category">
-                                <option *ngFor="let category of categorie" [ngValue]="category">{{category.descrizione}}</option>
-                              </select>
-                            </div>
-                            <div class="form-group col-4" *ngIf="newCategory.controls.category.value">
-                              <label >Sotto-categoria</label>
-                              <select class="form-control form-control-sm" formControlName="subCategory">
-                                <option *ngFor="let subCategory of newCategory.controls.category.value.sottocategorie" [ngValue]="subCategory">{{subCategory.descrizione}}</option>
-                              </select>
-                            </div>
-                            
-                            <div class="form-group col-4">
-                              <label >Importo:</label>
-                              <input class="form-control form-control-sm" formControlName="amount" type="number">
-                            </div>
+                <div *ngFor="let newCategory of otherCategories.controls; let i=index" [formGroupName]="i" >
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                          <select class="form-control form-control-sm" formControlName="category">
+                            <option [ngValue]="null" selected disabled hidden >Seleziona categoria</option>
+                            <option *ngFor="let category of categorie" [ngValue]="category">{{category.descrizione}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-4" *ngIf="newCategory.controls.category.value">
+                          <select class="form-control form-control-sm" formControlName="subCategory">
+                            <option *ngFor="let subCategory of newCategory.controls.category.value.sottocategorie" [ngValue]="subCategory">{{subCategory.descrizione}}</option>
+                          </select>
+                        </div>
+                        
+                        <div class="form-group col-4">
+                          <input class="form-control form-control-sm" formControlName="amount" type="number" [ngClass]="{'negativeAmount': i == 0 && otherCategories.errors && otherCategories.errors.negativeAmount}" >
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,10 @@ import { FormBuilder, FormGroup, FormArray, Validators, ValidatorFn, AbstractCon
 export function amountSumValidator(amount: number): ValidatorFn {
   return (control: FormArray): {[key: string]: any} => {
     let totatAmount = 0;
+    let defaultFB = control.controls[0] as FormGroup;
+    if( defaultFB.controls.amount.value < 0 ){
+      return {'negativeAmount': {value: defaultFB.controls.amount.value}}
+    }
     for ( let category of control.controls) {
       let categoryFb = category as FormGroup;
       totatAmount += categoryFb.controls.amount.value;
@@ -56,8 +60,7 @@ export class MovimentoComponent implements OnInit {
       subCategory: [this.getSottoCategoria()],
       amount: [this.movimento.absAmount, [Validators.required, Validators.min(0.01), Validators.max(this.movimento.absAmount)]]
     });
-    firstFormGroup.controls.category.disable();
-    firstFormGroup.controls.subCategory.disable();
+    firstFormGroup.disable();
     return firstFormGroup;
   }
 
@@ -68,7 +71,6 @@ export class MovimentoComponent implements OnInit {
   }
 
   resetForm() {
-    debugger;
     const defaultFormArray = this.fb.array([this.buildDefaultFormGroup()], amountSumValidator(this.movimento.absAmount));
     this.movimentoSplitForm.setControl('otherCategories', defaultFormArray);
   }
@@ -80,11 +82,37 @@ export class MovimentoComponent implements OnInit {
       totalAmount = totalAmount + categoryFb.controls.amount.value;
     }
     let remainingAmount = this.movimento.absAmount - totalAmount;
-    return this.fb.group({ 
+    let formGroup = this.fb.group({ 
       category: [null, [Validators.required]],
       subCategory: [null],
       amount: [remainingAmount > 0 ? remainingAmount : 0, [Validators.required, Validators.min(0.01)]]
     });
+    formGroup.controls.amount.valueChanges.subscribe(
+      (selectedValue) => {
+        //prendiamo tutti i valori delle categorie aggiuntive, e sottraiamo da importo del movimento
+        let newCategories  = this.otherCategories.controls.slice(1);
+        let totalAmount = 0;
+        for ( let category of newCategories) {
+          let categoryFb = category as FormGroup;
+          let amount = 0;
+          if ( categoryFb === formGroup) {
+            amount = selectedValue;
+          }else {
+            amount = categoryFb.controls.amount.value;
+          }
+          
+          totalAmount += amount;
+        }
+        let remaining = this.movimento.absAmount - totalAmount;
+        let defaultFG = this.otherCategories.controls[0] as FormGroup;
+        
+        defaultFG.patchValue({
+          "amount": remaining
+        });
+        defaultFG.updateValueAndValidity();
+      }
+    );
+    return formGroup;
   }
 
   get otherCategories(): FormArray {
@@ -96,10 +124,11 @@ export class MovimentoComponent implements OnInit {
   }
 
   onSubmit() {
+    debugger;
     if( this.movimentoSplitForm.valid) {
       this._service.splitMovimento(this.movimento, 1, this.otherCategories.value).subscribe(data => {
         console.log(data);
-      })
+      });
     }
     
   }
