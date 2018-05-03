@@ -63,7 +63,8 @@
                         </div>
                         
                         <div class="form-group col-4">
-                          <input class="form-control form-control-sm" formControlName="amount" type="number" [ngClass]="{'negativeAmount': i == 0 && otherCategories.errors && otherCategories.errors.negativeAmount}" >
+                          <input class="form-control form-control-sm" formControlName="amount" type="number" 
+                          [ngClass]="{'negativeAmount': (i == 0 && otherCategories.errors && otherCategories.errors.negativeAmount) || (newCategory.controls.amount.errors && newCategory.controls.amount.errors.min)}" >
                         </div>
                     </div>
                 </div>
