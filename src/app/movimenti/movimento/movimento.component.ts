@@ -126,7 +126,7 @@ export class MovimentoComponent implements OnInit {
   onSubmit() {
     debugger;
     if( this.movimentoSplitForm.valid) {
-      this._service.splitMovimento(this.movimento, 1, this.otherCategories.value).subscribe(data => {
+      this._service.splitMovimento(this.movimento, this.otherCategories.value).subscribe(data => {
         console.log(data);
       });
     }

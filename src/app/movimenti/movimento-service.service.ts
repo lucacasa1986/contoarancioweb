@@ -106,7 +106,7 @@ export class MovimentoServiceService {
     return this.http.put("/api/movimento", movimento);
   }
 
-  splitMovimento(movimento:Movimento, conto_id:number, others: Array<{category:Categoria, subCategory:SottoCategoria, amount:number}>) {
+  splitMovimento(movimento:Movimento, others: Array<{category:Categoria, subCategory:SottoCategoria, amount:number}>) {
     let origCategory = others[0];
     movimento.categoria_id = origCategory.category.id;
     if ( origCategory.subCategory) {
@@ -130,7 +130,6 @@ export class MovimentoServiceService {
 
     let data = {
       movimento: movimento,
-      conto_id: conto_id,
       others: others
     }
     return this.http.post("/api/movimento", data)
