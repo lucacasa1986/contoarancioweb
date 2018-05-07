@@ -63,6 +63,7 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
           ]
         },
         options: {
+          showAllTooltips: true,
           legend: {
             display: false
          },
