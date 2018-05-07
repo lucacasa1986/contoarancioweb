@@ -77,32 +77,24 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
       }
   }
 
-  lightenDarkenColor = function (col, amt) {
-    var usePound = false;
-    if (col[0] == "#") {
-      col = col.slice(1);
-      usePound = true;
+  ColorLuminance = function(hex, lum) {
+
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
     }
-    var num = parseInt(col, 16);
-    var r = (num >> 16) + amt;
-    if (r > 255) {
-      r = 255;
-    } else if (r < 0) {
-      r = 0;
+    lum = lum || 0;
+  
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+      c = parseInt(hex.substr(i*2,2), 16);
+      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+      rgb += ("00"+c).substr(c.length);
     }
-    var b = ((num >> 8) & 0x00FF) + amt;
-    if (b > 255) {
-      b = 255;
-    } else if (b < 0) {
-      b = 0;
-    }
-    var g = (num & 0x0000FF) + amt;
-    if (g > 255) {
-      g = 255;
-    } else if (g < 0) {
-      g = 0;
-    }
-    return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
+  
+    return rgb;
   }
 
   updateChartPerCategoria(categoriaSelezionata:Categoria) {
@@ -132,8 +124,8 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
                 }else {
                   let new_size = this.chart.data.labels.push(c.descrizione);
                   let index = new_size - 1;
-                  let col_modifier = 20 * index * ( index % 2 == 0 ? -1 : 1)
-                  let colore_mod = this.lightenDarkenColor(categoriaSelezionata.colore, col_modifier );
+                  let col_modifier = 0.1 * index * ( index % 2 == 0 ? -1 : 1)
+                  let colore_mod = this.ColorLuminance(categoriaSelezionata.colore, col_modifier );
                   this.chart.data.datasets[0].backgroundColor.push(colore_mod);
                   this.chart.data.datasets[0].data.push(m.absAmount);
                 }
