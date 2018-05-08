@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="col-md-8 col-12 pointer order-3 order-md-2" (click)="isVisible = !isVisible"  >
-          <span class="align-middle" style="font-weight:bold"> {{movimento.type}}</span>
+          <span class="align-middle" > {{movimento.description}}</span>
           <span class="badge badge-primary">{{getSottoCategoria().descrizione}}</span>
         </div>
         <div class="col-md-3 col-6 pointer order-md-3 order-2" (click)="isVisible = !isVisible">
@@ -34,7 +34,7 @@
       <div *ngIf="isVisible" class="p-3">
         <div class="row">
           <div class="col">
-            <p class="list-group-item-text">{{movimento.description}}</p>
+            <p class="list-group-item-text" style="font-weight:bold">{{movimento.type}}</p>
           </div>
           <div class="col">
             <label >Sotto-categoria</label>
