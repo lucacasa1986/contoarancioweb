@@ -104,9 +104,9 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
     this.chart.data.datasets[0].backgroundColor = [];
     this.chart.data.datasets[0].data = [];
     if( categoriaSelezionata) {
-      this.chart.data.labels.push("Altro");
-      this.chart.data.datasets[0].backgroundColor.push(categoriaSelezionata.colore);
-      this.chart.data.datasets[0].data.push(0);
+      let add_sottocat_generica:boolean = false;
+      let amount_sottocat_generica:number = 0;
+      
       for ( let m of this.movimenti) {
         let categoria_movimento = m.categoria_id; 
         if( categoria_movimento === categoriaSelezionata.id) {
@@ -134,12 +134,16 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
             }
           }else {
             // non sottocategorizzato
-            let current_amount = this.chart.data.datasets[0].data[0];
-            let new_amount = current_amount + m.absAmount;
-            this.chart.data.datasets[0].data[0] = +new_amount.toFixed(2);
+            add_sottocat_generica = true;
+            let new_amount = amount_sottocat_generica + m.absAmount;
+            amount_sottocat_generica = +new_amount.toFixed(2);
           }
-          
         }
+      }
+      if ( add_sottocat_generica) {
+        this.chart.data.labels.push("Altro");
+        this.chart.data.datasets[0].backgroundColor.push(categoriaSelezionata.colore);
+        this.chart.data.datasets[0].data.push(amount_sottocat_generica);
       }
     }
     
