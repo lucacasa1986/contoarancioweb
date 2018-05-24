@@ -1,6 +1,7 @@
 {
   "/api": {
-    "target": "http://localhost:5000",
-    "secure": false
+    "target": "https://lucacasa1986.pythonanywhere.com",
+    "secure": false,
+    "changeOrigin": true
   }
 }

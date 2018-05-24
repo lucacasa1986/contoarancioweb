@@ -64,9 +64,14 @@ export class GraficoComponent implements OnChanges, AfterViewInit {
         },
         options: {
           showAllTooltips: true,
+          pieceLabel: {
+            render: 'label',
+            fontColor: '#000',
+            position: 'outside'
+          },
           legend: {
             display: false
-         },
+          },
           title: {
             display: false,
             text: this.title

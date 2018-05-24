@@ -29,6 +29,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.1",
     "bootstrap": "^4.0.0",
     "chart.js": "^2.7.2",
+    "chart.piecelabel.js": "^0.10.0",
     "core-js": "^2.4.1",
     "express": "^4.16.3",
     "express-http-proxy": "^1.1.0",

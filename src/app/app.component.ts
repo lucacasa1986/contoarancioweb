@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TagService } from './tag.service';
 import { MovimentoServiceService } from './movimenti/movimento-service.service';
 import { Chart } from 'chart.js';
+import { PieceLabel } from 'chart.piecelabel.js';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+		/*
     Chart.pluginService.register({
 			beforeRender: function (chart) {
 				if (chart.config.options.showAllTooltips) {
@@ -61,6 +63,6 @@ export class AppComponent implements OnInit {
 					chart.options.tooltips.enabled = false;
 				}
 			}
-		})
+		})*/
   }
 }

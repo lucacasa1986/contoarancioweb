@@ -36,6 +36,7 @@ import { RegoleService } from './regole.service';
 import { RegolaDetailComponent } from './regole/regola-detail/regola-detail.component';
 import { ContoContainerComponent } from './conti/conto-container/conto-container.component';
 import { CategorieComponent } from './categorie/categorie/categorie.component';
+import 'chart.piecelabel.js';
 
 registerLocaleData(localeIt, 'it');
 
