@@ -7,13 +7,11 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService {
 
-  URL_BASE = environment.API_URL;
-
   constructor(private http: HttpClient, private jwtHelper:JwtHelperService) {
   }
     
   login(email:string, password:string ) {
-      const endpoint = this.URL_BASE + '/api/login';
+      const endpoint = '/api/login';
       const formData: FormData = new FormData();
       formData.append('email', email);
       formData.append('password', password);
@@ -24,7 +22,7 @@ export class AuthService {
   }
 
   signup(email:string, password:string ) {
-    const endpoint = this.URL_BASE +  '/api/register';
+    const endpoint = '/api/register';
     const formData: FormData = new FormData();
     formData.append('email', email);
     formData.append('password', password);

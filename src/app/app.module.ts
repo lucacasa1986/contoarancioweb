@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';  // replaces previous Http service
+import { NgModule, InjectionToken, Injectable, Inject } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpInterceptor, HttpHandler, HttpEvent, HttpRequest } from '@angular/common/http';  // replaces previous Http service
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TagInputModule } from 'ngx-chips';
@@ -37,6 +37,8 @@ import { RegolaDetailComponent } from './regole/regola-detail/regola-detail.comp
 import { ContoContainerComponent } from './conti/conto-container/conto-container.component';
 import { CategorieComponent } from './categorie/categorie/categorie.component';
 import 'chart.piecelabel.js';
+import { environment } from '../environments/environment';
+import { Observable } from 'rxjs/Observable';
 
 registerLocaleData(localeIt, 'it');
 
@@ -48,6 +50,30 @@ export function jwtOptionsFactory(tokenService) {
     whitelistedDomains: [ /^null$/ , "lucacasa1986.pythonanywhere.com"]
   }
 }
+
+export const API_URL = new InjectionToken<string>('apiUrl');
+
+@Injectable()
+export class ApiUrlInterceptor implements HttpInterceptor {
+    constructor(@Inject(API_URL) private apiUrl: string) {}
+
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        debugger;
+        req = req.clone({url: this.prepareUrl(req.url)});
+        return next.handle(req);
+      }
+    
+      private isAbsoluteUrl(url: string): boolean {
+        const absolutePattern = /^https?:\/\//i;
+        return absolutePattern.test(url);
+      }
+    
+      private prepareUrl(url: string): string {
+        url = this.isAbsoluteUrl(url) ? url : this.apiUrl + '/' + url;
+        return url.replace(/([^:]\/)\/+/g, '$1');
+      }
+}
+
 
 @NgModule({
   declarations: [
@@ -81,7 +107,10 @@ export function jwtOptionsFactory(tokenService) {
       }
     })
   ],
-  providers: [MovimentoServiceService, TagService, RegoleService, AuthService, AuthGuardService, JwtHelperService],
+  providers: [MovimentoServiceService, TagService, RegoleService, AuthService, AuthGuardService, JwtHelperService, 
+  {provide: API_URL, useValue: environment.API_URL},
+  {provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true, deps: [API_URL]}
+],
   entryComponents: [RegoleComponent],
   bootstrap: [AppComponent]
 })

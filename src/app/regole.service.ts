@@ -5,24 +5,23 @@ import { environment } from '../environments/environment';
 
 @Injectable()
 export class RegoleService {
-  URL_BASE = environment.API_URL;
   constructor(private http:HttpClient) { }
 
   getRegole() {
-    return this.http.get(this.URL_BASE +"/api/regole");
+    return this.http.get("/api/regole");
   }
 
   saveOrUpdateRegola(regola:Regola ) {
-    return this.http.post(this.URL_BASE +"/api/regole", regola);
+    return this.http.post("/api/regole", regola);
   }
 
   applyRules(contoId:number) {
-    const endpoint = this.URL_BASE +"/api/regole/" + contoId;
+    const endpoint = "/api/regole/" + contoId;
     return this.http.put(endpoint,{});
   }
 
   deleteRule(regola:Regola) {
-    const endpoint = this.URL_BASE +"/api/regole/" + regola.id;
+    const endpoint = "/api/regole/" + regola.id;
     return this.http.delete(endpoint);
   }
 

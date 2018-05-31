@@ -8,8 +8,6 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class MovimentoServiceService {
 
-  URL_BASE = environment.API_URL;
-
   private _categories: BehaviorSubject<Categoria[]>;
 
   public readonly allCategories: Observable<Categoria[]>;
@@ -49,7 +47,7 @@ export class MovimentoServiceService {
   }
 
   getConti() {
-    return this.http.get(this.URL_BASE + "/api/conti");
+    return this.http.get("/api/conti");
   }
 
   creaNuovoConto(titolare:string, descrizione:string) {
@@ -58,7 +56,7 @@ export class MovimentoServiceService {
       "descrizione": descrizione
     };
 
-    return this.http.post(this.URL_BASE +'/api/conto', body);
+    return this.http.post('/api/conto', body);
   }
 
   getMovements(dateFrom: Date, dateTo:Date, contoId: number) {
@@ -66,7 +64,7 @@ export class MovimentoServiceService {
       from_date: this.formatDate(dateFrom),
       to_date:  this.formatDate(dateTo)
     }
-    return this.http.get(this.URL_BASE +"/api/"+contoId, {
+    return this.http.get("/api/"+contoId, {
       params: params
     });
   }
@@ -76,7 +74,7 @@ export class MovimentoServiceService {
       from_date: this.formatDate(dateFrom),
       to_date:  this.formatDate(dateTo)
     }
-    return this.http.get(this.URL_BASE +"/api/"+contoId + "/andamento", {
+    return this.http.get("/api/"+contoId + "/andamento", {
       params: params
     });
   }
@@ -92,21 +90,21 @@ export class MovimentoServiceService {
         return category["id"];
       });
     }
-    return this.http.get(this.URL_BASE +"/api/"+contoId + "/parziali", {
+    return this.http.get("/api/"+contoId + "/parziali", {
       params: params
     });
   }
 
   getCategories() {
-    return this.http.get(this.URL_BASE +"/api/categories");
+    return this.http.get("/api/categories");
   }
 
   updateSubCategory(category:SottoCategoria) {
-    return this.http.post(this.URL_BASE +"/api/subcategories", category);
+    return this.http.post("/api/subcategories", category);
   }
 
   updateMovimento(movimento:Movimento) {
-    return this.http.put(this.URL_BASE +"/api/movimento", movimento);
+    return this.http.put("/api/movimento", movimento);
   }
 
   splitMovimento(movimento:Movimento, others: Array<{category:Categoria, subCategory:SottoCategoria, amount:number}>) {
@@ -135,12 +133,12 @@ export class MovimentoServiceService {
       movimento: movimento,
       others: others
     }
-    return this.http.post(this.URL_BASE +"/api/movimento", data)
+    return this.http.post("/api/movimento", data)
   }
 
   uploadFile(idConto:number,file:File, type:string)
   {
-    const endpoint =this.URL_BASE + '/api/parse/'+idConto;
+    const endpoint ='/api/parse/'+idConto;
     const formData: FormData = new FormData();
     formData.append('excel_file', file, file.name);
     formData.append('type', type);
