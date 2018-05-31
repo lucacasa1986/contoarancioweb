@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Tag } from './movimenti/movimento.model';
-
+import { environment } from '../environments/environment';
 @Injectable()
 export class TagService {
-
+  URL_BASE = environment.API_URL;
   allTags:Tag[] = [];
 
   constructor(private http:HttpClient) { }
 
   init() {
-    this.http.get("/api/tags").subscribe(
+    this.http.get(this.URL_BASE +"/api/tags").subscribe(
       data => {
         this.allTags = (data as any[]).map(function(element){
           return new Tag(element);
@@ -34,15 +34,15 @@ export class TagService {
       });
       this.allTags.push(new_tag);
     }
-    return this.http.put("/api/tag/"+movimento_id+"/" + tag_value,{});
+    return this.http.put(this.URL_BASE +"/api/tag/"+movimento_id+"/" + tag_value,{});
   }
 
   deleteTag(movimento_id: number, tag_value:string) {
-    return this.http.delete("/api/tag/"+movimento_id+"/" + tag_value);
+    return this.http.delete(this.URL_BASE +"/api/tag/"+movimento_id+"/" + tag_value);
   }
 
   getTagForMovimento(movimento_id: number) {
-    return this.http.get("/api/tag/"+movimento_id);
+    return this.http.get(this.URL_BASE +"/api/tag/"+movimento_id);
   }
 
 }

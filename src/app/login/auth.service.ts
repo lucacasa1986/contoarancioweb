@@ -3,16 +3,17 @@ import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/shareReplay';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
+import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService {
 
+  URL_BASE = environment.API_URL;
 
   constructor(private http: HttpClient, private jwtHelper:JwtHelperService) {
   }
     
   login(email:string, password:string ) {
-      const endpoint = '/api/login';
+      const endpoint = this.URL_BASE + '/api/login';
       const formData: FormData = new FormData();
       formData.append('email', email);
       formData.append('password', password);
@@ -23,7 +24,7 @@ export class AuthService {
   }
 
   signup(email:string, password:string ) {
-    const endpoint = '/api/register';
+    const endpoint = this.URL_BASE +  '/api/register';
     const formData: FormData = new FormData();
     formData.append('email', email);
     formData.append('password', password);

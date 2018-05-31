@@ -45,7 +45,7 @@ export function jwtOptionsFactory(tokenService) {
     tokenGetter: () => {
       return localStorage.getItem('token');
     },
-    whitelistedDomains: [ /^null$/ ]
+    whitelistedDomains: [ /^null$/ , "lucacasa1986.pythonanywhere.com"]
   }
 }
 
